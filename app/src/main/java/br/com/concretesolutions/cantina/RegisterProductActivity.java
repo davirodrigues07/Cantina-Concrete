@@ -13,10 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -38,6 +43,9 @@ public class RegisterProductActivity extends ActionBarActivity {
 
     @Extra
     String productBarCode;
+    @Extra
+    String productId;
+    Product product;
 
     @ViewById
     ImageView productPicture;
@@ -47,6 +55,30 @@ public class RegisterProductActivity extends ActionBarActivity {
     TextView price;
     @ViewById
     TextView amount;
+
+    @AfterViews
+    void afterViews() {
+        if (productId != null) {
+            ParseQuery<Product> parseQuery = ParseQuery.getQuery(Product.class);
+            parseQuery.getInBackground(this.productId, new GetCallback<Product>() {
+                @Override
+                public void done(Product parseProduct, ParseException e) {
+                    if (e == null && parseProduct != null) {
+                        product = parseProduct;
+                        loadProductInfo();
+                    }
+                }
+            });
+        }
+    }
+
+    void loadProductInfo() {
+        this.name.setText(this.product.getName());
+        this.price.setText(this.product.getPrice());
+        this.amount.setText(this.product.getAmount());
+        this.productBarCode = this.product.getBarCode();
+        Picasso.with(this).load(this.product.getImage().getUrl()).into(this.productPicture);
+    }
 
     /**
      * Start android camera to capture order photo
