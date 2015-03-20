@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Cantina</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="add_picture">Tirar foto</string>
+    <string name="amount">Quantidade</string>
+    <string name="product_name">Nome do produto</string>
+    <string name="price">Preço</string>
+    <string name="save">Salvar</string>
+</resources>
