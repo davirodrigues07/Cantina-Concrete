@@ -6,6 +6,8 @@ import com.parse.ParseObject;
 
 import java.io.Serializable;
 
+import br.com.concretesolutions.cantina.utils.PriceHelper;
+
 @ParseClassName("Product")
 public class Product extends ParseObject implements Serializable {
 
@@ -20,7 +22,7 @@ public class Product extends ParseObject implements Serializable {
     }
 
     public void setPrice(double price) {
-        this.put(PRICE, price);
+        this.put(PRICE, PriceHelper.formatPrice(price));
     }
 
     public void setName(String name) {
@@ -40,7 +42,7 @@ public class Product extends ParseObject implements Serializable {
     }
 
     public String getPrice() {
-        return this.getString(PRICE);
+        return PriceHelper.formatPrice(this.getNumber(PRICE).toString());
     }
 
     public ParseFile getImage() {
@@ -48,12 +50,16 @@ public class Product extends ParseObject implements Serializable {
     }
 
     public String getAmount() {
-        return this.getString(AMOUNT);
+        return this.getNumber(AMOUNT).toString();
     }
 
     public String getBarCode() {
         return this.getString(BARCODE);
     }
 
+    @Override
+    public String toString(){
+        return getName();
+    }
 
 }

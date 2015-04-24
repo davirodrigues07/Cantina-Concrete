@@ -6,7 +6,12 @@
 
     <string name="add_picture">Tirar foto</string>
     <string name="amount">Quantidade</string>
+    <string name="amount_">Quantidade:</string>
+    <string name="edit_product">Editar</string>
     <string name="product_name">Nome do produto</string>
     <string name="price">Preço</string>
+    <string name="price_">Preço:</string>
     <string name="save">Salvar</string>
+    <string name="title_activity_product_info">Produto</string>
+    <string name="title_activity_list_product">ListProductActivity</string>
 </resources>
