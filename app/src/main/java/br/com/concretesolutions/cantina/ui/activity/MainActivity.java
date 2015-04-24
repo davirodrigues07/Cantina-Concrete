@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity implements ZXingScannerView.
     public void onCreate(Bundle state) {
         super.onCreate(state);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         List<BarcodeFormat> formats = new ArrayList<>();
         formats.add(BarcodeFormat.EAN_13);

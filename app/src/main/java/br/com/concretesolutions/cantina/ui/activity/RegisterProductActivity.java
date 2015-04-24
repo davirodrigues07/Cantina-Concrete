@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -130,28 +131,34 @@ public class RegisterProductActivity extends ActionBarActivity {
 
     @Click
     void save() {
+        // name, amount and price is empty
         if (name.getText().length() < 1 && amount.getText().length() < 1
                 && price.getText().length() < 1 ) {
             Toast.makeText(this, "Não pode haver campos vazios :)", Toast.LENGTH_LONG).show();
             return;
         }
 
+        // don't have drawable in productPicture
         if (productPicture.getDrawable() == null) {
             Toast.makeText(this, "Não esqueça a foto ;)", Toast.LENGTH_LONG).show();
             return;
         }
 
+        // fidback save
         save.setText("Salvando...");
         save.setEnabled(false);
 
         final Product product = new Product();
+        // set object id for update object
         if (productId != null) {
             product.setObjectId(productId);
         }
+        // set product attributes
         product.setName(this.name.getText().toString());
         product.setPrice(Double.valueOf(this.price.getText().toString()));
         product.setAmount(Integer.valueOf(this.amount.getText().toString()));
         product.setBarCode(this.productBarCode);
+
         if (this.mProductBitmap != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             this.mProductBitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
@@ -159,6 +166,7 @@ public class RegisterProductActivity extends ActionBarActivity {
             ParseFile productImage = new ParseFile(this.productBarCode + ".jpg", byteArray);
             product.setImage(productImage);
         }
+
         product.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
