@@ -1,4 +1,4 @@
-package com.concretesolutions.br.cantina;
+package br.com.concretesolutions.br.cantina;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
