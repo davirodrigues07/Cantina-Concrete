@@ -1,7 +1,6 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +26,11 @@ import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 
 @EActivity(R.layout.activity_list_product)
-public class ListProductActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ListProductActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     @ViewById
     ListView productList;

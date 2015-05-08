@@ -20,9 +20,10 @@ import org.androidannotations.annotations.ViewById;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 
 @EActivity(R.layout.activity_product_info)
-public class ProductInfoActivity extends ActionBarActivity {
+public class ProductInfoActivity extends BaseActivity {
 
     @Extra
     String productId;

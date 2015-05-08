@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,10 +32,11 @@ import java.util.Date;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.utils.BitmapUtils;
 
 @EActivity(R.layout.activity_register_product)
-public class RegisterProductActivity extends ActionBarActivity {
+public class RegisterProductActivity extends BaseActivity {
 
     private final static int TAKE_PICTURE_REQUEST_CODE = 1;
     private Uri fileUri;

@@ -1,7 +1,6 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -13,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 
-public class MainActivity extends ActionBarActivity implements ZXingScannerView.ResultHandler {
+public class MainActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
 
     @Override
