@@ -22,7 +22,6 @@ public class MainActivity extends BaseActivity implements ZXingScannerView.Resul
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         List<BarcodeFormat> formats = new ArrayList<>();

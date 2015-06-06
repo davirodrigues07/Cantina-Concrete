@@ -1,17 +1,20 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,7 +33,8 @@ import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 
 @EActivity(R.layout.activity_list_product)
-public class ListProductActivity extends BaseActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ListProductActivity extends BaseActivity implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener {
 
     @ViewById
     ListView productList;
@@ -38,14 +42,29 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
     FloatingActionButton addProduct;
     List<Product> products;
     @ViewById
-    FrameLayout containerListProduct;
+    CoordinatorLayout containerListProduct;
     @ViewById
     ProgressBar progressOfListProduct;
+
+
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+    @ViewById
+    CollapsingToolbarLayout collapsingToolbar;
 
     Product productSelected;
 
     @AfterViews
     public void afterViews() {
+        // fab elevation on lollipop
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            addProduct.setElevation(7);
+        }
+
+        // toolbar
+        setSupportActionBar(toolbar);
+        collapsingToolbar.setTitle(getResources().getString(R.string.app_name));
+
         containerListProduct.setVisibility(View.GONE);
         progressOfListProduct.setVisibility(View.VISIBLE);
 
@@ -68,6 +87,9 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
         afterViews();
     }
 
+    /**
+     * load the itens of parse on list
+     */
     public void generateListView() {
         ArrayAdapter<Product> adapter = new ListProductAdapter(this, products);
 
@@ -78,6 +100,9 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
         registerForContextMenu(productList);
     }
 
+    /**
+     * open activity for scanning
+     */
     @Click
     public void addProduct(View v) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -85,6 +110,9 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
     }
 
 
+    /**
+     * open ctivity of product info
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Product product = ((Product) parent.getItemAtPosition(position));
@@ -94,6 +122,9 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
 
     }
 
+    /**
+     * save id product for context menu
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         productSelected = (Product) parent.getItemAtPosition(position);
@@ -113,6 +144,9 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
         });
     }
 
+    /**
+     * Delete item on parse
+     */
     public void deleteItem() {
         Toast.makeText(this, "Deletando " + productSelected.getName(), Toast.LENGTH_SHORT).show();
         productSelected.deleteInBackground(new DeleteCallback() {

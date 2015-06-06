@@ -1,16 +1,18 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -28,9 +30,6 @@ public class ProductInfoActivity extends BaseActivity {
     @Extra
     String productId;
     Product mProduct;
-
-    @ViewById
-    TextView productName;
     @ViewById
     ImageView productImage;
     @ViewById
@@ -42,8 +41,16 @@ public class ProductInfoActivity extends BaseActivity {
     @ViewById
     LinearLayout containerProductInfo;
 
+    @ViewById
+    CollapsingToolbarLayout collapsingToolbar;
+    @ViewById
+    Toolbar toolbar;
+
     @AfterViews
     public void afterViews() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         containerProductInfo.setVisibility(View.INVISIBLE);
         progressOfProductInfo.setVisibility(View.VISIBLE);
 
@@ -67,11 +74,24 @@ public class ProductInfoActivity extends BaseActivity {
         afterViews();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * load the product info
+     */
     public void loadProductInfo() {
-        productName.setText(mProduct.getName());
-        Picasso.with(this)
+        collapsingToolbar.setTitle(mProduct.getName());
+        Glide.with(this)
                 .load(mProduct.getImage().getUrl())
-                .resize(productImage.getWidth(), productImage.getHeight())
                 .centerCrop()
                 .into(productImage);
         productPrice.setText(mProduct.getPrice());
@@ -83,6 +103,9 @@ public class ProductInfoActivity extends BaseActivity {
         super.onBackPressed();
     }
 
+    /**
+     * opens intent product register for edit
+     */
     @Click(R.id.editProduct)
     public void click(View v) {
         RegisterProductActivity_.intent(this)

@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="normal_spacing">10dp</dimen>
     <dimen name="small_spacing">6dp</dimen>
+    <dimen name="float_buttom_margin">10dp</dimen>
 </resources>
