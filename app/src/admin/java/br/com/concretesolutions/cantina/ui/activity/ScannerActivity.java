@@ -16,7 +16,7 @@ import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 
-public class MainActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
+public class ScannerActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
 
     @Override
@@ -52,10 +52,10 @@ public class MainActivity extends BaseActivity implements ZXingScannerView.Resul
             @Override
             public void done(Product product, ParseException e) {
                 if (e == null && product != null) {
-                    ProductInfoActivity_.intent(MainActivity.this)
+                    ProductInfoActivity_.intent(ScannerActivity.this)
                             .productId(product.getObjectId()).start();
                 } else {
-                    RegisterProductActivity_.intent(MainActivity.this)
+                    RegisterProductActivity_.intent(ScannerActivity.this)
                             .productBarCode(barCode).start();
                 }
             }

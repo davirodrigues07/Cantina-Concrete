@@ -111,7 +111,7 @@ public class RegisterProductActivity extends BaseActivity {
                         String filePath;
                         if (fileUri != null) {
                             Cursor cursor = getContentResolver().query(fileUri, new String[]
-                                            {android.provider.MediaStore.Images.ImageColumns.DATA},
+                                            {MediaStore.Images.ImageColumns.DATA},
                                     null, null, null);
                             cursor.moveToFirst();
                             filePath = cursor.getString(0);

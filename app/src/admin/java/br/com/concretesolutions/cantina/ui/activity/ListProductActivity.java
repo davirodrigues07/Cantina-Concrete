@@ -105,7 +105,7 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
      */
     @Click
     public void addProduct(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ScannerActivity.class);
         startActivity(intent);
     }
 
