@@ -28,7 +28,7 @@ import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 
-@EActivity(R.layout.activity_main)
+@EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;

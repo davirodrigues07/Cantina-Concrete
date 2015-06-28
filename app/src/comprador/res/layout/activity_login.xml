@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="50dp"
-            android:src="@drawable/ic_coffee"/>
+            android:src="@mipmap/ic_coffee"/>
 
         <TextView
             android:layout_width="wrap_content"

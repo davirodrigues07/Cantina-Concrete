@@ -1,10 +1,3 @@
 <resources>
     <string name="app_name">Cantina Compras</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="amount">Quantidade</string>
-    <string name="amount_">Quantidade:</string>
-    <string name="product_name">Nome do produto</string>
-    <string name="price">Preço</string>
-    <string name="price_">Preço:</string>
 </resources>

@@ -10,7 +10,7 @@
 
     <application>
         <activity
-            android:name="br.com.concretesolutions.cantina.ui.activity.LoginPlusActivity"
+            android:name="br.com.concretesolutions.cantina.ui.activity.LoginActivity_"
             android:screenOrientation="portrait" />
     </application>
 

@@ -8,4 +8,5 @@
     <color name="color_button_click">#F4FF81</color>
     <color name="color_primary">#ff9955</color>
     <color name="color_primary_dark">#ff8833</color>
+    <color name="gray">#ffbbbbbb</color>
 </resources>
