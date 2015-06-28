@@ -20,21 +20,9 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activity.RegisterProductActivity_"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.ProductInfoActivity_"
-            android:label="@string/title_activity_product_info"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.ScannerActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
