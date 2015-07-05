@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:navigationBarColor">@color/color_primary</item>
+        <item name="android:navigationBarColor">@color/color_primary_dark</item>
         <!--item name="android:colorAccent"></item>
         <item name="android:textColorPrimary"></item-->
     </style>

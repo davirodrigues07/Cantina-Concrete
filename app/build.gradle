@@ -21,7 +21,7 @@ apt {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "br.com.concretesolutions.cantina"
@@ -29,7 +29,6 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName versionNameApp
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,18 +51,8 @@ android {
             versionName "$versionNameApp-admin"
         }
         comprador {
-            applicationId "br.com.concretesolutions.cantina.comprador"
+            applicationId "br.com.concretesolutions.cantina.compras"
             versionName "$versionNameApp-comprador"
-
-            // google+ config
-            signingConfigs {
-                config {
-                    keyAlias System.getenv("CANTINA_KEY_ALIAS")
-                    keyPassword System.getenv("CANTINA_KEY_PASSWORD")
-                    storeFile file('appkeys/pluslogin.jks')
-                    storePassword System.getenv("CANTINA_KEY_PASSWORD")
-                }
-            }
         }
     }
 }
@@ -75,7 +64,6 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.2.0'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'me.dm7.barcodescanner:zxing:1.6.3'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'

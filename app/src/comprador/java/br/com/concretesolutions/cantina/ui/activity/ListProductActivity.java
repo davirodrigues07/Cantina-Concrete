@@ -2,12 +2,10 @@ package br.com.concretesolutions.cantina.ui.activity;
 
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -23,10 +21,12 @@ import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 
 @EActivity(R.layout.activity_list)
-public class ListProductActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
+public class ListProductActivity extends BaseActivity implements AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemClickListener {
 
     @ViewById
     ListView productList;
@@ -34,8 +34,6 @@ public class ListProductActivity extends AppCompatActivity implements AdapterVie
     CoordinatorLayout containerListProduct;
     @ViewById
     ProgressBar progressOfListProduct;
-
-
     @ViewById
     Toolbar toolbar;
     @ViewById
@@ -79,7 +77,6 @@ public class ListProductActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ImageView imageView = (ImageView)view.findViewById(R.id.image_product_list_item);
-
+        LoginActivity_.intent(this).start();
     }
 }

@@ -1,5 +1,7 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -21,18 +23,23 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
+import br.com.concretesolutions.cantina.application.Preferences_;
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    public static final String CONCRETE_DOMAIN = "@concretesolutions.com.br";
     private GoogleApiClient mGoogleApiClient;
     ConnectionResult mConectionResult;
+    @Pref
+    Preferences_ mPreferences;
     Person person = null;
 
     @ViewById
@@ -72,38 +79,43 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
     }
 
     public void getProfileInformation() {
-        signInButton.setEnabled(false);
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-            person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+                person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
             final Credentials credentials = new Credentials();
             credentials.setGooglePlusId(person.getId());
-            // verifica se o item já existe no parse
+
             ParseQuery.getQuery(Credentials.class).findInBackground(new FindCallback<Credentials>() {
                 @Override
                 public void done(List<Credentials> list, ParseException e) {
-                    for (Credentials item : list) {
-                        if(item.getGooglePlusId().equals(credentials.getGooglePlusId())) {
-                            // pega o objectId para sobrescrever o objeto
-                            credentials.setObjectId(item.getObjectId());
-                        }
-                        credentials.setName(person.getDisplayName());
-                        credentials.setImage(person.getImage().getUrl().replace("?sz=50",""));
-                        credentials.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
-                        credentials.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                String msg;
-                                if (e == null) {
-                                    msg = "Nome: " + credentials.getName() + " email: " + credentials.getEmail();
-                                } else {
-                                    msg = "Erro: "+e.getMessage();
-                                }
-                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                for (Credentials item : list) {
+                    if (item.getGooglePlusId().equals(credentials.getGooglePlusId())) {
+                        // get objectId if if already exists on the parse
+                        credentials.setObjectId(item.getObjectId());
                     }
+                    credentials.setName(person.getDisplayName());
+                    credentials.setImage(person.getImage().getUrl().replace("?sz=50", ""));
+                    credentials.setEmail(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                    credentials.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            String msg;
+                            if (e == null) {
+                                msg = "Nome: " + credentials.getName() + " email: " + credentials.getEmail();
+                                // Save in sharedpreferences
+                                mPreferences.GooglePlusId().put(person.getId());
+                                mPreferences.username().put(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                                // Disable singInButton
+                                signInButton.setEnabled(false);
+                            } else {
+                                msg = "Erro: " + e.getMessage();
+                            }
+                            //FIXME trocar por alguma ação depois do login
+                            Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
                 }
             });
         }
@@ -122,7 +134,21 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
 
     @Override
     public void onConnected(Bundle bundle) {
-        getProfileInformation();
+        // Mail domain is not @concretesolutions.com.br
+        if (!Plus.AccountApi.getAccountName(mGoogleApiClient).contains(CONCRETE_DOMAIN)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Esse email não é Concrete Solutions. Tente novamente.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mGoogleApiClient.disconnect();
+                        }
+                    });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } else {
+            getProfileInformation();
+        }
     }
 
     @Override

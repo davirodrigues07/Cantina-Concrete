@@ -1,35 +1,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/actiobar_layout" />
 
-    <FrameLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/progressOfListProduct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            tools:visibility="gone" />
-
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/containerListProduct"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/productList"
+            <ProgressBar
+                android:id="@+id/progressOfListProduct"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                tools:visibility="gone" />
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/containerListProduct"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </android.support.design.widget.CoordinatorLayout>
+                <LinearLayout
+                    android:id="@+id/linear_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-    </FrameLayout>
+                    <ListView
+                        android:id="@+id/productList"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+            </android.support.design.widget.CoordinatorLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
