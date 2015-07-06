@@ -4,9 +4,9 @@
     <color name="white">#ffffff</color>
     <color name="red">#ff4444</color>
     <color name="green">#99cc00</color>
-    <color name="color_button">#eeff41</color>
-    <color name="color_button_click">#F4FF81</color>
-    <color name="color_primary">#ff9955</color>
-    <color name="color_primary_dark">#ff8833</color>
+    <color name="color_button">#333333</color>
+    <color name="color_button_click">#2F2F2F</color>
+    <color name="color_primary">#7a68ae</color>
+    <color name="color_primary_dark">#605389</color>
     <color name="gray">#ffbbbbbb</color>
 </resources>

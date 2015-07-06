@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -44,6 +46,10 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
 
     @ViewById
     SignInButton signInButton;
+    @ViewById
+    ProgressBar progressLogin;
+    @ViewById
+    ImageView iconApp;
 
     @Override
     protected void onStart() {
@@ -90,7 +96,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                 public void done(List<Credentials> list, ParseException e) {
                 for (Credentials item : list) {
                     if (item.getGooglePlusId().equals(credentials.getGooglePlusId())) {
-                        // get objectId if if already exists on the parse
+                        // Get objectId if already exists on the parse
                         credentials.setObjectId(item.getObjectId());
                     }
                     credentials.setName(person.getDisplayName());
@@ -107,10 +113,11 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                                 mPreferences.username().put(Plus.AccountApi.getAccountName(mGoogleApiClient));
                                 // Disable singInButton
                                 signInButton.setEnabled(false);
+                                finish();
                             } else {
                                 msg = "Erro: " + e.getMessage();
                             }
-                            //FIXME trocar por alguma ação depois do login
+                            //Fixme remover isso depois xD
                             Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT)
                                     .show();
                         }
@@ -124,6 +131,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
     @Click(R.id.sign_in_button)
     public void click(View v) {
         if (!mGoogleApiClient.isConnecting() && mConectionResult.hasResolution()) {
+            iconApp.setVisibility(View.GONE);
+            progressLogin.setVisibility(View.VISIBLE);
             try {
                 mConectionResult.startResolutionForResult(this, mConectionResult.getErrorCode());
             } catch (IntentSender.SendIntentException e) {
@@ -141,27 +150,52 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            showLoad(false);
                             mGoogleApiClient.disconnect();
                         }
                     });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         } else {
+            showLoad(true);
             getProfileInformation();
         }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        showLoad(false);
         if (!connectionResult.hasResolution()) {
             GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
             return;
         }
         mConectionResult = connectionResult;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mPreferences.username().getOr("").equals("") &&
+                mPreferences.GooglePlusId().getOr("").equals("")) {
+            // Sets this Activity how last on stack
+            moveTaskToBack(true);
+        }
+        finish();
+    }
+
+    public void showLoad(boolean show) {
+        if (show) {
+            iconApp.setVisibility(View.GONE);
+            progressLogin.setVisibility(View.VISIBLE);
+            signInButton.setEnabled(false);
+        } else {
+            progressLogin.setVisibility(View.GONE);
+            iconApp.setVisibility(View.VISIBLE);
+            signInButton.setEnabled(true);
+        }
     }
 }

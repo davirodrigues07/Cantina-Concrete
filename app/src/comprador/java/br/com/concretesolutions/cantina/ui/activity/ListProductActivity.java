@@ -77,6 +77,6 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LoginActivity_.intent(this).start();
+
     }
 }
