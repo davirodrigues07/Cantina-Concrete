@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -67,7 +68,6 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
         productList.setAdapter(adapter);
         productList.setOnItemClickListener(this);
         productList.setOnItemLongClickListener(this);
-
     }
 
     @Override
@@ -77,6 +77,6 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Toast.makeText(this, mProducts.get(position).getName(), Toast.LENGTH_SHORT).show();
     }
 }
