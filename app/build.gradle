@@ -29,7 +29,6 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName versionNameApp
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -47,6 +46,7 @@ android {
 
     productFlavors {
         admin {
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             applicationId "br.com.concretesolutions.cantina.admin"
             versionName "$versionNameApp-admin"
         }

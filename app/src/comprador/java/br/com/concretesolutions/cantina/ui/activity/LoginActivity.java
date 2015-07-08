@@ -111,6 +111,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                                 // Save in sharedpreferences
                                 mPreferences.GooglePlusId().put(person.getId());
                                 mPreferences.username().put(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                                mPreferences.email().put(credentials.getEmail());
                                 // Disable singInButton
                                 signInButton.setEnabled(false);
                                 finish();

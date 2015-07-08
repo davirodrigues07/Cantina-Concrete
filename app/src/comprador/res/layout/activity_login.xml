@@ -17,7 +17,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="50dp"
             android:src="@mipmap/ic_coffee"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/progress_login"
@@ -25,7 +25,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_margin="50dp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"

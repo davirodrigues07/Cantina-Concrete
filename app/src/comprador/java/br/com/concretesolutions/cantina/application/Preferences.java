@@ -8,4 +8,6 @@ public interface Preferences {
     String GooglePlusId();
 
     String username();
+
+    String email();
 }
