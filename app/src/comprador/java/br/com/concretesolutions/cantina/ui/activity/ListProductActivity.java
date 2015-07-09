@@ -28,7 +28,7 @@ import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 
-@EActivity(R.layout.activity_list)
+@EActivity(R.layout.fragment_list_product)
 public class ListProductActivity extends BaseActivity implements AdapterView.OnItemLongClickListener,
         AdapterView.OnItemClickListener {
 
