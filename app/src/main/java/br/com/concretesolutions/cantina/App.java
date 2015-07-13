@@ -13,6 +13,7 @@ import br.com.concretesolutions.cantina.data.type.parse.Product;
 @EApplication
 public class App extends Application {
 
+    @Override
     public void onCreate() {
         super.onCreate();
         ParseObject.registerSubclass(Product.class);

@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -16,9 +16,9 @@
 
             <fragment
                 android:id="@+id/fragment_container"
+                android:name="br.com.concretesolutions.cantina.ui.fragment.DebitListFragment_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="br.com.concretesolutions.cantina.ui.fragment.DebitListFragment_"
                 tools:layout="@layout/fragment_debit_list" />
 
         </LinearLayout>

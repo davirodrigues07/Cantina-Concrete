@@ -35,7 +35,7 @@ public class DebitListFragment extends Fragment {
         ParseQuery.getQuery(Sale.class).findInBackground(new FindCallback<Sale>() {
             @Override
             public void done(List<Sale> list, ParseException e) {
-                for (Sale sale: list) {
+                for (Sale sale : list) {
                     if (sale.getBuyer().getEmail().equals(mPrefs.email())) {
                         mSales = list;
                     }
@@ -47,7 +47,10 @@ public class DebitListFragment extends Fragment {
 
     public void generateRecyclerView() {
         debitList.setHasFixedSize(true);
-        debitList.setAdapter(new DebitListAdapter(mSales, R.layout.debit_item_layout, getActivity()));
+        debitList.setAdapter(new DebitListAdapter(
+                getActivity(),
+                mSales,
+                R.layout.debit_item_layout));
         debitList.setItemAnimator(new DefaultItemAnimator());
 
     }

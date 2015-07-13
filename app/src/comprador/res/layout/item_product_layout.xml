@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginLeft="80dp"
-        android:orientation="horizontal">
+        android:layout_marginLeft="80dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -20,7 +19,7 @@
                 android:id="@+id/buy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
+                android:layout_gravity="center_vertical|right|end"
                 android:layout_marginRight="20dp"
                 android:background="@color/green"
                 android:text="Comprar"
@@ -70,7 +69,7 @@
 
         </FrameLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/image_product_list_item"

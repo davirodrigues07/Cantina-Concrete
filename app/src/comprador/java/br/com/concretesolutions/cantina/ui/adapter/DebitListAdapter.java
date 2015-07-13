@@ -21,7 +21,7 @@ public class DebitListAdapter extends RecyclerView.Adapter<DebitListAdapter.Debi
     private int mIntemLayout;
     private Context mContext;
 
-    public DebitListAdapter(List<Sale> listSales, int itemLayout, Context context) {
+    public DebitListAdapter(Context context, List<Sale> listSales, int itemLayout) {
         mListSales = listSales;
         mIntemLayout = itemLayout;
         mContext = context;
