@@ -46,15 +46,6 @@ public class DebtListActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     @Click(R.id.fab_buy)
     public void fabBuyClick() {
         ListProductFragment fragment = ListProductFragment_.builder().build();
