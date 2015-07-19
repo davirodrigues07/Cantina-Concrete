@@ -38,18 +38,17 @@ import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 public class LoginActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String CONCRETE_DOMAIN = "@concretesolutions.com.br";
-    private GoogleApiClient mGoogleApiClient;
     ConnectionResult mConectionResult;
     @Pref
     Preferences_ mPreferences;
     Person person = null;
-
     @ViewById
     SignInButton signInButton;
     @ViewById
     ProgressBar progressLogin;
     @ViewById
     ImageView iconApp;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onStart() {
@@ -86,7 +85,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
 
     public void getProfileInformation() {
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-                person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
             final Credentials credentials = new Credentials();
             credentials.setGooglePlusId(person.getId());
@@ -94,10 +93,11 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
             ParseQuery.getQuery(Credentials.class).findInBackground(new FindCallback<Credentials>() {
                 @Override
                 public void done(List<Credentials> list, ParseException e) {
-                for (Credentials item : list) {
-                    if (item.getGooglePlusId().equals(credentials.getGooglePlusId())) {
-                        // Get objectId if already exists on the parse
-                        credentials.setObjectId(item.getObjectId());
+                    for (Credentials item : list) {
+                        if (item.getGooglePlusId().equals(credentials.getGooglePlusId())) {
+                            // Get objectId if already exists on the parse
+                            credentials.setObjectId(item.getObjectId());
+                        }
                     }
                     credentials.setName(person.getDisplayName());
                     credentials.setImage(person.getImage().getUrl().replace("?sz=50", ""));
@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                                     .show();
                         }
                     });
-                }
+
                 }
             });
         }
