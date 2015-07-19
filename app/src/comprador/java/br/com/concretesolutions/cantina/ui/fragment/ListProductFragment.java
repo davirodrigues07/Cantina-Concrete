@@ -11,15 +11,20 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
+import br.com.concretesolutions.cantina.application.Preferences_;
+import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.view.ItemProductView;
@@ -34,6 +39,8 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     RecyclerView productList;
     @ViewById(R.id.progress_of_list_product)
     ProgressBar progressOfListProduct;
+    @Pref
+    Preferences_ mPrefs;
 
     List<Product> mProducts;
 
@@ -65,14 +72,29 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
 
     @Override
     public void onClickedItemButton(Product product) {
-        Toast.makeText(getActivity(), "button click name: " + product.getName(), Toast.LENGTH_LONG)
-                .show();
+        final Sale sale = new Sale();
+        sale.setProduct(product);
+        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPrefs.email().getOr(""))
+                .findInBackground(new FindCallback<Credentials>() {
+                    @Override
+                    public void done(List<Credentials> list, ParseException e) {
+                        sale.setBuyer(list.get(0));
+                        sale.setPaid(false);
+                        sale.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Toast.makeText(getActivity(),
+                                        "Compra realizada com sucesso",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
+                });
     }
 
     @Override
     public void onItemViewClicked(View v) {
-        int position = productList.getChildLayoutPosition(v);
-        Toast.makeText(getActivity(), "item click name: " + mProducts.get(position).getName(), Toast.LENGTH_SHORT)
-                .show();
+        // add action
     }
 }
