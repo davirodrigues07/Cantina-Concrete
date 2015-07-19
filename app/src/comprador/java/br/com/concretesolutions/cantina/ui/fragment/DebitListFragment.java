@@ -37,7 +37,7 @@ public class DebitListFragment extends Fragment {
             public void done(List<Sale> list, ParseException e) {
                 for (Sale sale : list) {
                     if (sale.getBuyer().getEmail().equals(mPrefs.email())) {
-                        mSales = list;
+                        mSales.add(sale);
                     }
                 }
                 generateRecyclerView();
