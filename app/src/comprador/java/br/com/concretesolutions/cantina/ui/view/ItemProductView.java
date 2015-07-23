@@ -37,6 +37,30 @@ public class ItemProductView extends FrameLayout {
     }
 
     /**
+     * Prepare each list item
+     *
+     * @param product
+     */
+    public void bind(final Product product) {
+        nameProduct.setText(product.getName());
+        amountProduct.setText(product.getAmount());
+        Picasso.with(mContext).load(product.getImage().getUrl())
+                .centerCrop()
+                .transform(new RoundedTransformation(100, 20))
+                .resize(160, 160)
+                .into(imageProduct);
+
+        if (mButtonListener != null) {
+            buy.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mButtonListener.onClickedItemButton(product);
+                }
+            });
+        }
+    }
+
+    /**
      * Method for implements singleton
      *
      * @param context
@@ -59,30 +83,6 @@ public class ItemProductView extends FrameLayout {
     public ItemProductView setClickItemButtonListener(OnClickItemButtonListener listener) {
         mButtonListener = listener;
         return this;
-    }
-
-    /**
-     * Prepare each list item
-     *
-     * @param product
-     */
-    public void bind(final Product product) {
-        nameProduct.setText(product.getName());
-        amountProduct.setText(product.getAmount());
-        Picasso.with(mContext).load(product.getImage().getUrl())
-                .centerCrop()
-                .transform(new RoundedTransformation(100, 20))
-                .resize(160, 160)
-                .into(imageProduct);
-
-        if (mButtonListener != null) {
-            buy.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mButtonListener.onClickedItemButton(product);
-                }
-            });
-        }
     }
 
     public ImageView getImageProductTextView() {

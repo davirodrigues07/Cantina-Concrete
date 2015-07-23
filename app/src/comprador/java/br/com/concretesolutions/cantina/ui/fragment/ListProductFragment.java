@@ -64,8 +64,8 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
         adapter.setList(mProducts);
         adapter.setOnClickItemButtonListener(this);
         adapter.setItemViewClickListener(this);
-        productList.setLayoutManager(new LinearLayoutManager(getActivity()));
         productList.setAdapter(adapter);
+        productList.setLayoutManager(new LinearLayoutManager(getActivity()));
         productList.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyDataSetChanged();
     }

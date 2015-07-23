@@ -29,7 +29,7 @@ public class ListProductAdapter extends RecyclerViewAdapterBase<Product, ItemPro
 
     @Override
     public void onBindViewHolder(ViewWrapper<ItemProductView> holder, int position) {
-        ItemProductView view = (ItemProductView) holder.getView();
+        ItemProductView view = holder.getView();
         view.setClickItemButtonListener(mOnClickItemButtonListener);
         view.bind(getList().get(position));
     }

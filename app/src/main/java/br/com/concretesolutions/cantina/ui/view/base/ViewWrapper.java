@@ -5,14 +5,14 @@ import android.view.View;
 
 public class ViewWrapper<V extends View> extends RecyclerView.ViewHolder {
 
-    View mView;
+    V mView;
 
-    public ViewWrapper(View itemView) {
+    public ViewWrapper(V itemView) {
         super(itemView);
         mView = itemView;
     }
 
-    public View getView() {
+    public V getView() {
         return mView;
     }
 }

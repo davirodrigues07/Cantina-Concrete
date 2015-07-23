@@ -51,6 +51,7 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:src="@drawable/no_paid" />
+
     </FrameLayout>
 
     <LinearLayout
