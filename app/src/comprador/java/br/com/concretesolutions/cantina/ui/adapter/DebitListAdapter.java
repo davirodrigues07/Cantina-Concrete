@@ -1,6 +1,7 @@
 package br.com.concretesolutions.cantina.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import br.com.concretesolutions.cantina.data.type.parse.Sale;

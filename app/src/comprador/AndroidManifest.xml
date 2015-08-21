@@ -19,11 +19,6 @@
             android:name=".ui.activity.LoginActivity_"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".ui.activity.ListProductActivity_"
-            android:screenOrientation="portrait" />
-
-
     </application>
 
 </manifest>
