@@ -15,6 +15,7 @@ import com.parse.SaveCallback;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
@@ -27,11 +28,12 @@ import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
+import br.com.concretesolutions.cantina.ui.presenter.ListProductPresenter;
 import br.com.concretesolutions.cantina.ui.view.ItemProductView;
 
 @EFragment(R.layout.fragment_list_product)
 public class ListProductFragment extends Fragment implements ItemProductView.OnClickItemButtonListener,
-        RecyclerViewAdapterBase.OnItemViewClickListener {
+        RecyclerViewAdapterBase.OnItemViewClickListener, RecyclerViewFill<Product> {
 
     public static final String NAME = ListProductFragment.class.getSimpleName();
 
@@ -42,26 +44,26 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     @Pref
     Preferences_ mPrefs;
 
+    ListProductPresenter presenter;
+
     List<Product> mProducts;
 
     @AfterViews
     public void afterView() {
         productList.setVisibility(View.GONE);
         progressOfListProduct.setVisibility(View.VISIBLE);
-        ParseQuery.getQuery(Product.class).findInBackground(new FindCallback<Product>() {
-            @Override
-            public void done(List<Product> list, ParseException e) {
-                mProducts = list;
-                progressOfListProduct.setVisibility(View.GONE);
-                productList.setVisibility(View.VISIBLE);
-                prepareRecyclerView();
-            }
-        });
+        presenter = new ListProductPresenter();
+        presenter.initialize(this);
     }
 
-    public void prepareRecyclerView() {
+
+    @UiThread
+    @Override
+    public void prepareRecyclerViewWithData(List<Product> list) {
+        progressOfListProduct.setVisibility(View.GONE);
+        productList.setVisibility(View.VISIBLE);
         ListProductAdapter adapter = new ListProductAdapter(getActivity());
-        adapter.setList(mProducts);
+        adapter.setList(list);
         adapter.setOnClickItemButtonListener(this);
         adapter.setItemViewClickListener(this);
         productList.setAdapter(adapter);
@@ -97,4 +99,5 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     public void onItemViewClicked(View v) {
         // add action
     }
+
 }

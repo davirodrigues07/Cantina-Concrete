@@ -1,16 +1,12 @@
 package br.com.concretesolutions.cantina.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -22,7 +18,6 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
@@ -30,33 +25,34 @@ import br.com.concretesolutions.cantina.application.Preferences_;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.ui.adapter.DebitListAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
+import br.com.concretesolutions.cantina.ui.presenter.DebitListPresenter;
 
 @EFragment(R.layout.fragment_debit_list)
-public class DebitListFragment extends Fragment implements RecyclerViewAdapterBase.OnItemViewClickListener {
+public class DebitListFragment extends Fragment implements RecyclerViewAdapterBase.OnItemViewClickListener, RecyclerViewFill<Sale> {
 
     @ViewById(R.id.debit_list)
     RecyclerView debitList;
+    @ViewById(R.id.progress_of_list_debit)
+    ProgressBar progressBarOfListDebit;
     @Pref
     Preferences_ mPrefs;
-
-    List<Sale> mSales;
+    DebitListPresenter presenter;
 
     @AfterViews
     public void afterViews() {
-        ParseQuery.getQuery(Sale.class).findInBackground(new FindCallback<Sale>() {
-            @Override
-            public void done(List<Sale> list, ParseException e) {
-                mSales = list;
-                debitList.setVisibility(View.VISIBLE);
-                generateRecyclerView();
-            }
-        });
+        debitList.setVisibility(View.GONE);
+        progressBarOfListDebit.setVisibility(View.VISIBLE);
+        presenter = new DebitListPresenter();
+        presenter.initialize(this);
     }
 
     @UiThread
-    public void generateRecyclerView() {
+    @Override
+    public void prepareRecyclerViewWithData(List<Sale> list) {
+        progressBarOfListDebit.setVisibility(View.GONE);
+        debitList.setVisibility(View.VISIBLE);
         DebitListAdapter adapter = new DebitListAdapter(getActivity());
-        adapter.setList(mSales);
+        adapter.setList(list);
         adapter.setItemViewClickListener(this);
         debitList.setLayoutManager(new LinearLayoutManager(getActivity()));
         debitList.setAdapter(adapter);
