@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface RecyclerViewFill<T> {
 
-    void prepareRecyclerViewWithData(List<T> list);
+    void prepareRecyclerViewWithData(final List<T> list);
 
 }

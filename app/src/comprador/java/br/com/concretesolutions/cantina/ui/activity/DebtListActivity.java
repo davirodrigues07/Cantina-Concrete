@@ -1,57 +1,96 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
-import android.os.Build;
-import android.support.design.widget.AppBarLayout;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
-import br.com.concretesolutions.cantina.application.Preferences_;
+import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
+import br.com.concretesolutions.cantina.ui.adapter.DebitListAdapter;
+import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.fragment.ListProductFragment;
-import br.com.concretesolutions.cantina.ui.fragment.ListProductFragment_;
+import br.com.concretesolutions.cantina.ui.fragment.RecyclerViewFill;
+import br.com.concretesolutions.cantina.ui.presenter.DebitListPresenter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-@EActivity(R.layout.activity_debt_list)
-public class DebtListActivity extends BaseActivity {
+public class DebtListActivity extends BaseActivity implements RecyclerViewFill<Sale>, RecyclerViewAdapterBase.OnItemViewClickListener {
 
-    @Pref
-    Preferences_ mPreferences;
-    @ViewById
+    @Bind(R.id.fab_buy)
     FloatingActionButton fabBuy;
-    @ViewById
+    /*@Bind(R.id.appbar)
     AppBarLayout appbar;
-    @ViewById
-    Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;*/
+    @Bind(R.id.debit_list)
+    RecyclerView debitList;
+
+    Fragment fragment;
+    DebitListPresenter presenter;
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mPreferences.username().getOr("").equals("") &&
-                mPreferences.GooglePlusId().getOr("").equals("")) {
-            LoginActivity_.intent(this).start();
+        if (mPreferences.username().equals("") &&
+                mPreferences.GooglePlusId().equals("")) {
+            Intent loginActivityIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginActivityIntent);
         }
     }
 
-    @AfterViews
-    public void afterView() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fabBuy.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
-        }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_debt_list);
+        presenter = new DebitListPresenter();
+        presenter.initialize(this, mPreferences);
+        ButterKnife.bind(this);
     }
 
-    @Click(R.id.fab_buy)
+    @Override
+    public void prepareRecyclerViewWithData(final List<Sale> list) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                debitList.setVisibility(View.VISIBLE);
+                DebitListAdapter adapter = new DebitListAdapter(DebtListActivity.this);
+                adapter.setList(list);
+                adapter.setItemViewClickListener(DebtListActivity.this);
+                debitList.setLayoutManager(new LinearLayoutManager(DebtListActivity.this));
+                debitList.setAdapter(adapter);
+                debitList.setItemAnimator(new DefaultItemAnimator());
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onItemViewClicked(View v) {
+        Toast.makeText(this, "Teste", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @OnClick(R.id.fab_buy)
     public void fabBuyClick() {
-        ListProductFragment fragment = ListProductFragment_.builder().build();
+        fragment = new ListProductFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fragment_animation_open, R.anim.fragment_animation_close);
-        transaction.add(R.id.base, fragment);
+        transaction.add(android.R.id.content, fragment);
         transaction.addToBackStack(ListProductFragment.NAME);
         transaction.commit();
     }

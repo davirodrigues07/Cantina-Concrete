@@ -1,8 +1,5 @@
 package br.com.concretesolutions.cantina.application;
 
-import org.androidannotations.annotations.sharedpreferences.SharedPref;
-
-@SharedPref(value = SharedPref.Scope.APPLICATION_DEFAULT)
 public interface Preferences {
 
     String GooglePlusId();
@@ -10,4 +7,10 @@ public interface Preferences {
     String username();
 
     String email();
+
+    void GooglePlusId(String value);
+
+    void username(String value);
+
+    void email(String value);
 }

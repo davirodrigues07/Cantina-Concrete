@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 
 import br.com.concretesolutions.br.cantina.instrumentation.lib.ActivityRule;
 import br.com.concretesolutions.cantina.R;
-import br.com.concretesolutions.cantina.ui.activity.RegisterProductActivity_;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -25,29 +24,5 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class RegisterProductActivityTest {
-    @Rule
-    public final ActivityRule<RegisterProductActivity_>
-            main = new ActivityRule<>(RegisterProductActivity_.class);
 
-
-    @Test
-    public void saveInputsEmpty() {
-        onView(withId(R.id.save)).perform(click());
-    }
-
-    @Test
-    public void saveNotPicture(){
-        onView(withId(R.id.name)).perform(typeText("Banana"));
-        onView(withId(R.id.price)).perform(typeText("3.50"));
-        onView(withId(R.id.amount)).perform(typeText("2"));
-        onView(withId(R.id.save)).perform(click());
-    }
-
-    @Test
-    public void saveOk(){
-        onView(withId(R.id.name)).perform(typeText("Banana"));
-        onView(withId(R.id.price)).perform(typeText("3.50"));
-        onView(withId(R.id.amount)).perform(typeText("2"));
-        onView(withId(R.id.save)).perform(click());
-    }
 }

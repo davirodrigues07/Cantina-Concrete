@@ -1,19 +1,24 @@
 package br.com.concretesolutions.cantina.ui.activity.base;
 
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.EActivity;
-
 import br.com.concretesolutions.cantina.R;
+import br.com.concretesolutions.cantina.application.ApplicationPreference;
+import br.com.concretesolutions.cantina.application.Preferences;
 
-@EActivity(R.layout.base_activity)
 public abstract class BaseActivity extends AppCompatActivity {
 
+    public Preferences mPreferences;
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPreferences = ApplicationPreference
+                .getPreferece(this.getApplicationContext());
+        setContentView(R.layout.base_activity);
     }
 
     @Override

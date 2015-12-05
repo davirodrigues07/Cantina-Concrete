@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -22,32 +21,25 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
-
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
-import br.com.concretesolutions.cantina.application.Preferences_;
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-@EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String CONCRETE_DOMAIN = "@concretesolutions.com.br";
     ConnectionResult mConectionResult;
-    @Pref
-    Preferences_ mPreferences;
     Person person = null;
-    @ViewById
+    @Bind(R.id.sign_in_button)
     Button signInButton;
-    @ViewById
+    @Bind(R.id.progress_login)
     ProgressBar progressLogin;
-    @ViewById
+    @Bind(R.id.icon_app)
     ImageView iconApp;
     private GoogleApiClient mGoogleApiClient;
 
@@ -64,9 +56,12 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
         mGoogleApiClient.connect();
     }
 
-    @AfterViews
-    public void afterVews() {
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -110,9 +105,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                             if (e == null) {
                                 msg = "Nome: " + credentials.getName() + " email: " + credentials.getEmail();
                                 // Save in sharedpreferences
-                                mPreferences.GooglePlusId().put(person.getId());
-                                mPreferences.username().put(Plus.AccountApi.getAccountName(mGoogleApiClient));
-                                mPreferences.email().put(credentials.getEmail());
+                                mPreferences.GooglePlusId(person.getId());
+                                mPreferences.username(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                                mPreferences.email(credentials.getEmail());
                                 // Disable singInButton
                                 signInButton.setEnabled(false);
                                 finish();
@@ -130,7 +125,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
         }
     }
 
-    @Click(R.id.sign_in_button)
+    @OnClick(R.id.sign_in_button)
     public void click(View v) {
         if (!mGoogleApiClient.isConnecting() && mConectionResult.hasResolution()) {
             iconApp.setVisibility(View.GONE);
@@ -181,8 +176,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mPreferences.username().getOr("").equals("") &&
-                mPreferences.GooglePlusId().getOr("").equals("")) {
+        if (mPreferences.username().equals("") &&
+                mPreferences.GooglePlusId().equals("")) {
             // Sets this Activity how last on stack
             moveTaskToBack(true);
         }

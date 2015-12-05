@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.design.widget.AppBarLayout
+    <!--android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="256dp"
@@ -51,6 +51,6 @@
         app:backgroundTint="@color/color_button"
         android:elevation="@dimen/appbar_elevation"
         android:layout_marginLeft="@dimen/fab_margin_left"
-        android:layout_marginTop="-30dp"/>
+        android:layout_marginTop="-30dp"/-->
 
 </RelativeLayout>

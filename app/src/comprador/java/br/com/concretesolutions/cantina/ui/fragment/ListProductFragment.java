@@ -1,10 +1,16 @@
 package br.com.concretesolutions.cantina.ui.fragment;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -13,16 +19,11 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
-
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
-import br.com.concretesolutions.cantina.application.Preferences_;
+import br.com.concretesolutions.cantina.application.ApplicationPreference;
+import br.com.concretesolutions.cantina.application.Preferences;
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
@@ -30,53 +31,70 @@ import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.presenter.ListProductPresenter;
 import br.com.concretesolutions.cantina.ui.view.ItemProductView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-@EFragment(R.layout.fragment_list_product)
 public class ListProductFragment extends Fragment implements ItemProductView.OnClickItemButtonListener,
         RecyclerViewAdapterBase.OnItemViewClickListener, RecyclerViewFill<Product> {
 
     public static final String NAME = ListProductFragment.class.getSimpleName();
 
-    @ViewById(R.id.product_list)
+    @Bind(R.id.product_list)
     RecyclerView productList;
-    @ViewById(R.id.progress_of_list_product)
+    @Bind(R.id.progress_of_list_product)
     ProgressBar progressOfListProduct;
-    @Pref
-    Preferences_ mPrefs;
+    Preferences mPrefereces;
 
     ListProductPresenter presenter;
 
-    List<Product> mProducts;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list_product, container);
+        ButterKnife.bind(this, view);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-    @AfterViews
-    public void afterView() {
+    @Override
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(activity, attrs, savedInstanceState);
         productList.setVisibility(View.GONE);
         progressOfListProduct.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mPrefereces = ApplicationPreference.getPreferece(this.getActivity().getApplicationContext());
         presenter = new ListProductPresenter();
         presenter.initialize(this);
     }
 
 
-    @UiThread
     @Override
-    public void prepareRecyclerViewWithData(List<Product> list) {
-        progressOfListProduct.setVisibility(View.GONE);
-        productList.setVisibility(View.VISIBLE);
-        ListProductAdapter adapter = new ListProductAdapter(getActivity());
-        adapter.setList(list);
-        adapter.setOnClickItemButtonListener(this);
-        adapter.setItemViewClickListener(this);
-        productList.setAdapter(adapter);
-        productList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        productList.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyDataSetChanged();
+    public void prepareRecyclerViewWithData(final List<Product> list) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressOfListProduct.setVisibility(View.GONE);
+                productList.setVisibility(View.VISIBLE);
+                ListProductAdapter adapter = new ListProductAdapter(getActivity());
+                adapter.setList(list);
+                adapter.setOnClickItemButtonListener(ListProductFragment.this);
+                adapter.setItemViewClickListener(ListProductFragment.this);
+                productList.setAdapter(adapter);
+                productList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                productList.setItemAnimator(new DefaultItemAnimator());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public void onClickedItemButton(Product product) {
         final Sale sale = new Sale();
         sale.setProduct(product);
-        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPrefs.email().getOr(""))
+        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPrefereces.email())
                 .findInBackground(new FindCallback<Credentials>() {
                     @Override
                     public void done(List<Credentials> list, ParseException e) {
@@ -96,8 +114,12 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
     public void onItemViewClicked(View v) {
         // add action
     }
-
 }

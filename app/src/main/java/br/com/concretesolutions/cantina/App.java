@@ -11,7 +11,6 @@ import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
 
-@EApplication
 public class App extends Application {
 
     @Override
