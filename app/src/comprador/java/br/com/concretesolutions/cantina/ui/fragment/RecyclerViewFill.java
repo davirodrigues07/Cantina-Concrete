@@ -6,4 +6,8 @@ public interface RecyclerViewFill<T> {
 
     void prepareRecyclerViewWithData(final List<T> list);
 
+    void loadingData();
+
+    void finishLoadDAta();
+
 }

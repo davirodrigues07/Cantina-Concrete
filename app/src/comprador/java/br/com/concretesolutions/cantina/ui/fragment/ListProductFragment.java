@@ -43,7 +43,7 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     RecyclerView productList;
     @Bind(R.id.progress_of_list_product)
     ProgressBar progressOfListProduct;
-    Preferences mPrefereces;
+    Preferences mPreferences;
 
     ListProductPresenter presenter;
 
@@ -52,22 +52,20 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product, container);
         ButterKnife.bind(this, view);
+        presenter = new ListProductPresenter();
+        presenter.initialize(this);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(activity, attrs, savedInstanceState);
-        productList.setVisibility(View.GONE);
-        progressOfListProduct.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mPrefereces = ApplicationPreference.getPreferece(this.getActivity().getApplicationContext());
-        presenter = new ListProductPresenter();
-        presenter.initialize(this);
+        mPreferences = ApplicationPreference.getPreferece(this.getActivity().getApplicationContext());
     }
 
 
@@ -76,8 +74,6 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressOfListProduct.setVisibility(View.GONE);
-                productList.setVisibility(View.VISIBLE);
                 ListProductAdapter adapter = new ListProductAdapter(getActivity());
                 adapter.setList(list);
                 adapter.setOnClickItemButtonListener(ListProductFragment.this);
@@ -91,10 +87,22 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     }
 
     @Override
+    public void loadingData() {
+        productList.setVisibility(View.GONE);
+        progressOfListProduct.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void finishLoadDAta() {
+        progressOfListProduct.setVisibility(View.GONE);
+        productList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onClickedItemButton(Product product) {
         final Sale sale = new Sale();
         sale.setProduct(product);
-        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPrefereces.email())
+        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPreferences.email())
                 .findInBackground(new FindCallback<Credentials>() {
                     @Override
                     public void done(List<Credentials> list, ParseException e) {

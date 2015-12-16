@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
 
     @Bind(R.id.fab_buy)
     FloatingActionButton fabBuy;
+    @Bind(R.id.load_debit_data)
+    ProgressBar progress;
     /*@Bind(R.id.appbar)
     AppBarLayout appbar;
     @Bind(R.id.toolbar)
@@ -53,9 +56,9 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_list);
+        ButterKnife.bind(this);
         presenter = new DebitListPresenter();
         presenter.initialize(this, mPreferences);
-        ButterKnife.bind(this);
     }
 
     @Override
@@ -73,6 +76,18 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void loadingData() {
+        debitList.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void finishLoadDAta() {
+        progress.setVisibility(View.GONE);
+        debitList.setVisibility(View.VISIBLE);
     }
 
     @Override
