@@ -1,5 +1,8 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,39 +17,43 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.ViewById;
-
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-@EActivity(R.layout.activity_product_info)
 public class ProductInfoActivity extends BaseActivity {
+    public final static String PRODUCT_ID_EXTRA = "productId";
 
-    @Extra
     String productId;
     Product mProduct;
-    @ViewById
+    @Bind(R.id.productImage)
     ImageView productImage;
-    @ViewById
+    @Bind(R.id.productPrice)
     TextView productPrice;
-    @ViewById
+    @Bind(R.id.productAmount)
     TextView productAmount;
-    @ViewById
+    @Bind(R.id.progressOfProductInfo)
     ProgressBar progressOfProductInfo;
-    @ViewById
+    @Bind(R.id.containerProductInfo)
     LinearLayout containerProductInfo;
 
-    @ViewById
+    @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @ViewById
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @AfterViews
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_product_info);
+        ButterKnife.bind(this);
+        productId = getIntent().getExtras().getString(PRODUCT_ID_EXTRA);
+        afterViews();
+    }
+
     public void afterViews() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,6 +92,12 @@ public class ProductInfoActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Intent intentOpenInfo(Context context, String objectId) {
+        return new Intent(context, ProductInfoActivity.class)
+                .putExtra(ProductInfoActivity.PRODUCT_ID_EXTRA, objectId);
+
+    }
+
     /**
      * load the product info
      */
@@ -106,10 +119,9 @@ public class ProductInfoActivity extends BaseActivity {
     /**
      * opens intent product register for edit
      */
-    @Click(R.id.editProduct)
+    @OnClick(R.id.editProduct)
     public void click(View v) {
-        RegisterProductActivity_.intent(this)
-                .productId(productId)
-                .start();
+        Intent intent = RegisterProductActivity.intentEdit(this, productId);
+        startActivity(intent);
     }
 }

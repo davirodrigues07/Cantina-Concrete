@@ -1,5 +1,6 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.zxing.BarcodeFormat;
@@ -51,13 +52,15 @@ public class ScannerActivity extends BaseActivity implements ZXingScannerView.Re
         parseQuery.getFirstInBackground(new GetCallback<Product>() {
             @Override
             public void done(Product product, ParseException e) {
+                Intent intent;
                 if (e == null && product != null) {
-                    ProductInfoActivity_.intent(ScannerActivity.this)
-                            .productId(product.getObjectId()).start();
+                    intent = ProductInfoActivity
+                            .intentOpenInfo(ScannerActivity.this, product.getObjectId());
                 } else {
-                    RegisterProductActivity_.intent(ScannerActivity.this)
-                            .productBarCode(barCode).start();
+                    intent = RegisterProductActivity
+                            .intentNew(ScannerActivity.this, barCode);
                 }
+                startActivity(intent);
             }
         });
     }

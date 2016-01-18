@@ -11,16 +11,24 @@ import com.squareup.picasso.Picasso;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ItemDebitView extends LinearLayout {
 
-
+    @Bind(R.id.cell)
     LinearLayout cell;
+    @Bind(R.id.month)
     TextView month;
+    @Bind(R.id.day)
     TextView day;
+    @Bind(R.id.state_icon)
     ImageView stateIcon;
+    @Bind(R.id.hour)
     TextView hour;
+    @Bind(R.id.detail)
     TextView detail;
+    @Bind(R.id.value)
     TextView value;
     Context mContext;
 
@@ -28,13 +36,8 @@ public class ItemDebitView extends LinearLayout {
         super(context);
         mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.item_debit_layout, this);
-        cell = (LinearLayout) view.findViewById(R.id.cell);
-        month = (TextView) view.findViewById(R.id.month);
-        day = (TextView) view.findViewById(R.id.day);
-        stateIcon = (ImageView) view.findViewById(R.id.state_icon);
-        hour = (TextView) view.findViewById(R.id.hour);
-        detail = (TextView) view.findViewById(R.id.detail);
-        value = (TextView) view.findViewById(R.id.value);
+        ButterKnife.bind(view);
+
     }
 
     public void bind(Sale sale) {

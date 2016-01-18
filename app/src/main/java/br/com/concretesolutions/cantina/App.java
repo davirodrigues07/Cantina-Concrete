@@ -5,8 +5,6 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-import org.androidannotations.annotations.EApplication;
-
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;

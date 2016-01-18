@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-def AAVersion = '3.2'
 def supportVersion = '22.2.0'
 def versionNameApp = '0.0.1'
 buildscript {
@@ -10,13 +9,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-    }
-}
-// Plugin apt for android annotations
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName 'br.com.concretesolutions.cantina'
     }
 }
 
@@ -75,13 +67,9 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.google.android.gms:play-services-plus:7.5.0'
     // Parse
-    compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile 'com.parse:parse-android:1.12.0'
 
     compile 'com.jakewharton:butterknife:7.0.1'
-
-    // Annotations
-    apt "org.androidannotations:androidannotations:$AAVersion"
-    compile "org.androidannotations:androidannotations-api:$AAVersion"
 
     // Other dependences
     compile 'me.dm7.barcodescanner:zxing:1.6.3'

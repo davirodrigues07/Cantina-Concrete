@@ -2,6 +2,7 @@ package br.com.concretesolutions.cantina.ui.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -20,41 +21,45 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-@EActivity(R.layout.activity_list_product)
 public class ListProductActivity extends BaseActivity implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener {
 
-    @ViewById
+    @Bind(R.id.productList)
     ListView productList;
-    @ViewById
+    @Bind(R.id.add_product)
     FloatingActionButton addProduct;
     List<Product> products;
-    @ViewById
+    @Bind(R.id.containerListProduct)
     CoordinatorLayout containerListProduct;
-    @ViewById
+    @Bind(R.id.progressOfListProduct)
     ProgressBar progressOfListProduct;
 
 
-    @ViewById(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @ViewById
+    @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
 
     Product productSelected;
 
-    @AfterViews
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_product);
+        ButterKnife.bind(this);
+        afterViews();
+    }
+
     public void afterViews() {
         // fab elevation on lollipop
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
@@ -64,7 +69,6 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
         // toolbar
         setSupportActionBar(toolbar);
         collapsingToolbar.setTitle(getResources().getString(R.string.app_name));
-
         containerListProduct.setVisibility(View.GONE);
         progressOfListProduct.setVisibility(View.VISIBLE);
 
@@ -92,18 +96,16 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
      */
     public void generateListView() {
         ArrayAdapter<Product> adapter = new ListProductAdapter(this, products);
-
         productList.setAdapter(adapter);
         productList.setOnItemClickListener(this);
         productList.setOnItemLongClickListener(this);
-
         registerForContextMenu(productList);
     }
 
     /**
      * open activity for scanning
      */
-    @Click
+    @OnClick(R.id.add_product)
     public void addProduct(View v) {
         Intent intent = new Intent(this, ScannerActivity.class);
         startActivity(intent);
@@ -116,10 +118,8 @@ public class ListProductActivity extends BaseActivity implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Product product = ((Product) parent.getItemAtPosition(position));
-        ProductInfoActivity_.intent(this)
-                .productId(product.getObjectId())
-                .start();
-
+        Intent intent = ProductInfoActivity.intentOpenInfo(this, product.getObjectId());
+        startActivity(intent);
     }
 
     /**
