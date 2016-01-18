@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.view.ItemProductView;
-import br.com.concretesolutions.cantina.ui.view.ItemProductView_;
 import br.com.concretesolutions.cantina.ui.view.base.ViewWrapper;
 
 public class ListProductAdapter extends RecyclerViewAdapterBase<Product, ItemProductView> {
@@ -24,7 +23,7 @@ public class ListProductAdapter extends RecyclerViewAdapterBase<Product, ItemPro
 
     @Override
     protected ItemProductView onCreateItemView(ViewGroup parent, int viewType) {
-        return ItemProductView_.build(mContext);
+        return new ItemProductView(mContext);
     }
 
     @Override

@@ -3,7 +3,6 @@ package br.com.concretesolutions.cantina.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,7 +38,7 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
     @Bind(R.id.debit_list)
     RecyclerView debitList;
 
-    Fragment fragment;
+    ListProductFragment fragment;
     DebitListPresenter presenter;
 
     @Override
@@ -98,6 +97,7 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        fragment.popFragment();
     }
 
     @OnClick(R.id.fab_buy)
@@ -105,7 +105,7 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
         fragment = new ListProductFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fragment_animation_open, R.anim.fragment_animation_close);
-        transaction.add(android.R.id.content, fragment);
+        transaction.add(android.R.id.content, fragment, ListProductFragment.NAME);
         transaction.addToBackStack(ListProductFragment.NAME);
         transaction.commit();
     }

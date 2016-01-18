@@ -47,6 +47,12 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
 
     ListProductPresenter presenter;
 
+    public void popFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .remove(this)
+                .commit();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package br.com.concretesolutions.cantina.ui.view;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -9,31 +10,31 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.ViewById;
-
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.ui.utils.RoundedTransformation;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-@EViewGroup(R.layout.item_product_layout)
 public class ItemProductView extends FrameLayout {
 
-    private static ItemProductView mSingleton;
     private static Context mContext;
-    @ViewById(R.id.image_product_list_item)
+    @Bind(R.id.image_product_list_item)
     ImageView imageProduct;
-    @ViewById(R.id.name_product_list_item)
+    @Bind(R.id.name_product_list_item)
     TextView nameProduct;
-    @ViewById(R.id.amount_product_list_item)
+    @Bind(R.id.amount_product_list_item)
     TextView amountProduct;
-    @ViewById(R.id.buy)
+    @Bind(R.id.buy)
+
     Button buy;
     private OnClickItemButtonListener mButtonListener;
 
     public ItemProductView(Context context) {
         super(context);
         mContext = context;
+        View root = LayoutInflater.from(context).inflate(R.layout.item_product_layout, this);
+        ButterKnife.bind(root);
     }
 
     /**
@@ -58,20 +59,6 @@ public class ItemProductView extends FrameLayout {
                 }
             });
         }
-    }
-
-    /**
-     * Method for implements singleton
-     *
-     * @param context
-     * @return ItemProductView
-     */
-    public static ItemProductView getDefault(Context context) {
-        // Instantiate singleton if context different of older context
-        if (mSingleton == null && mContext == context) {
-            mSingleton = new ItemProductView(context);
-        }
-        return mSingleton;
     }
 
     /**
