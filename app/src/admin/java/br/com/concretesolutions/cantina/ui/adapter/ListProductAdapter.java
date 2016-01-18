@@ -59,7 +59,7 @@ public class ListProductAdapter extends ArrayAdapter<Product> {
         Picasso.with(convertView.getContext())
                 .load(product.getImage().getUrl())
                 .transform(new RoundedTransformation(100, 20))
-                .resize(160, 160)
+                .resize(180, 180)
                 .centerCrop()
                 .into(imageProductListItem);
 
