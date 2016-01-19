@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-def supportVersion = '22.2.0'
+def supportVersion = '23.0.1'
 def versionNameApp = '0.0.1'
 buildscript {
     repositories {
@@ -13,13 +13,13 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "br.com.concretesolutions.cantina"
-        minSdkVersion 15
-        targetSdkVersion 22
+        minSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
         versionName versionNameApp
     }
@@ -28,6 +28,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+
         }
     }
 
@@ -64,10 +67,12 @@ dependencies {
     compile "com.android.support:design:$supportVersion"
     compile "com.android.support:cardview-v7:$supportVersion"
     // Play-Services
+
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.google.android.gms:play-services-plus:7.5.0'
     // Parse
     compile 'com.parse:parse-android:1.12.0'
+    compile 'com.parse.bolts:bolts-android:1.3.0'
 
     compile 'com.jakewharton:butterknife:7.0.1'
 
