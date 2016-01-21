@@ -10,9 +10,9 @@ import java.util.GregorianCalendar;
 @ParseClassName("Sale")
 public class Sale extends ParseObject implements Serializable {
 
-    public static String BUYER = "Buyer";
-    public static String PRODRUCT = "Product";
-    public static String PAID = "Paid";
+    public static String BUYER = "buyer";
+    public static String PRODRUCT = "product";
+    public static String PAID = "paid";
     public static String DATE_OF_CREATE = "createAt";
 
     public Credentials getBuyer() {

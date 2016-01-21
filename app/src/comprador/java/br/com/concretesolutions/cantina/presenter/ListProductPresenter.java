@@ -1,4 +1,4 @@
-package br.com.concretesolutions.cantina.ui.presenter;
+package br.com.concretesolutions.cantina.presenter;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -7,7 +7,7 @@ import com.parse.ParseQuery;
 import java.util.List;
 
 import br.com.concretesolutions.cantina.data.type.parse.Product;
-import br.com.concretesolutions.cantina.ui.fragment.RecyclerViewFill;
+import br.com.concretesolutions.cantina.interfaces.RecyclerViewFill;
 
 public class ListProductPresenter {
 

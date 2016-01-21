@@ -7,30 +7,35 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
+import br.com.concretesolutions.cantina.interfaces.DebitListView;
+import br.com.concretesolutions.cantina.presenter.DebitListPresenter;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.DebitListAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.fragment.ListProductFragment;
-import br.com.concretesolutions.cantina.ui.fragment.RecyclerViewFill;
-import br.com.concretesolutions.cantina.ui.presenter.DebitListPresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DebtListActivity extends BaseActivity implements RecyclerViewFill<Sale>, RecyclerViewAdapterBase.OnItemViewClickListener {
+public class DebtListActivity extends BaseActivity implements DebitListView, RecyclerViewAdapterBase.OnItemViewClickListener {
 
     @Bind(R.id.fab_buy)
     FloatingActionButton fabBuy;
     @Bind(R.id.load_debit_data)
     ProgressBar progress;
+
+    @Bind(R.id.total_debit)
+    TextView debit;
     /*@Bind(R.id.appbar)
     AppBarLayout appbar;
     @Bind(R.id.toolbar)
@@ -87,6 +92,11 @@ public class DebtListActivity extends BaseActivity implements RecyclerViewFill<S
     public void finishLoadDAta() {
         progress.setVisibility(View.GONE);
         debitList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void returnTotalDebit(String value) {
+        debit.setText(value);
     }
 
     @Override

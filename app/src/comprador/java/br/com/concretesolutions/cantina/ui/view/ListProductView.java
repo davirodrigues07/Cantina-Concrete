@@ -16,7 +16,7 @@ import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
-import br.com.concretesolutions.cantina.ui.fragment.RecyclerViewFill;
+import br.com.concretesolutions.cantina.interfaces.RecyclerViewFill;
 
 public class ListProductView extends LinearLayout implements RecyclerViewFill<Product>,
         ItemProductView.OnClickItemButtonListener, RecyclerViewAdapterBase.OnItemViewClickListener {

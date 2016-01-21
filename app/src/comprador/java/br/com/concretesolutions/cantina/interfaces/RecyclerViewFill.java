@@ -1,4 +1,4 @@
-package br.com.concretesolutions.cantina.ui.fragment;
+package br.com.concretesolutions.cantina.interfaces;
 
 import java.util.List;
 

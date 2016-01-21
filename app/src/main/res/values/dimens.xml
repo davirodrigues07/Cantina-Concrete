@@ -5,4 +5,5 @@
     <dimen name="normal_spacing">10dp</dimen>
     <dimen name="small_spacing">6dp</dimen>
     <dimen name="float_buttom_margin">10dp</dimen>
+    <dimen name="margin_left">60dp</dimen>
 </resources>

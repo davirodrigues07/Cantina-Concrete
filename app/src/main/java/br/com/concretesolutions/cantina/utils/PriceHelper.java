@@ -12,14 +12,14 @@ public class PriceHelper {
         if (price.contains(".")) {
             String[] split = price.split("\\.");
             if (split[1].length() == 2) {
-                return price;
+                return convertDotToComma(price);
             } else if (split[1].length() == 1) {
-                return price.concat("0");
+                return convertDotToComma(price.concat("0"));
             } else {
-                return split[0] + "." + split[1].substring(0, 2);
+                return convertDotToComma(split[0] + "." + split[1].substring(0, 2));
             }
         }
-        return price.concat(".00");
+        return convertDotToComma(price.concat(".00"));
     }
 
     /**
@@ -33,5 +33,9 @@ public class PriceHelper {
             return Double.parseDouble(String.format("%.2f",price));
         }
         return price;
+    }
+
+    public static String convertDotToComma(String value){
+        return value.replace(".", ",");
     }
 }
