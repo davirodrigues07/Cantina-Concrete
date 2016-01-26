@@ -18,6 +18,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -110,6 +111,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
                                 mPreferences.email(credentials.getEmail());
                                 // Disable singInButton
                                 signInButton.setEnabled(false);
+                                ParseInstallation.getCurrentInstallation().put("userCredentials", credentials);
+                                ParseInstallation.getCurrentInstallation().saveInBackground();
                                 finish();
                             } else {
                                 msg = "Erro: " + e.getMessage();

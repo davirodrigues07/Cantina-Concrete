@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,11 +48,7 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     @Override
     protected void onStart() {
         super.onStart();
-        if (mPreferences.username().equals("") &&
-                mPreferences.GooglePlusId().equals("")) {
-            Intent loginActivityIntent = new Intent(this, LoginActivity.class);
-            startActivity(loginActivityIntent);
-        }
+
     }
 
     @Override
@@ -61,6 +56,11 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_list);
         ButterKnife.bind(this);
+        if (mPreferences.username().equals("") &&
+                mPreferences.GooglePlusId().equals("")) {
+            Intent loginActivityIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginActivityIntent);
+        }
         presenter = new DebitListPresenter();
         presenter.initialize(this, mPreferences);
     }

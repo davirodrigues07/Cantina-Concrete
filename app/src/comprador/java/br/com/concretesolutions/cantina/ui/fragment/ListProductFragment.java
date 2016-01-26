@@ -27,6 +27,7 @@ import br.com.concretesolutions.cantina.application.Preferences;
 import br.com.concretesolutions.cantina.data.type.parse.Credentials;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
+import br.com.concretesolutions.cantina.data.type.parse.SALE_STATE;
 import br.com.concretesolutions.cantina.interfaces.RecyclerViewFill;
 import br.com.concretesolutions.cantina.presenter.ListProductPresenter;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
@@ -109,12 +110,13 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
     public void onClickedItemButton(Product product) {
         final Sale sale = new Sale();
         sale.setProduct(product);
-        ParseQuery.getQuery(Credentials.class).whereEqualTo(Credentials.EMAIL, mPreferences.email())
+        ParseQuery.getQuery(Credentials.class)
+                .whereEqualTo(Credentials.EMAIL, mPreferences.email())
                 .findInBackground(new FindCallback<Credentials>() {
                     @Override
                     public void done(List<Credentials> list, ParseException e) {
                         sale.setBuyer(list.get(0));
-                        sale.setPaid(false);
+                        sale.setState(SALE_STATE.CREATED);
                         sale.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {

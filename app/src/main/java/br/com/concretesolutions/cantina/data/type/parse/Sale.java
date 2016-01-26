@@ -12,11 +12,11 @@ public class Sale extends ParseObject implements Serializable {
 
     public static String BUYER = "buyer";
     public static String PRODRUCT = "product";
-    public static String PAID = "paid";
+    public static String STATE = "state";
     public static String DATE_OF_CREATE = "createAt";
 
     public Credentials getBuyer() {
-        return (Credentials)this.getParseObject(BUYER);
+        return (Credentials) this.getParseObject(BUYER);
     }
 
     public void setBuyer(Credentials buyer) {
@@ -24,19 +24,19 @@ public class Sale extends ParseObject implements Serializable {
     }
 
     public Product getProduct() {
-        return (Product)this.getParseObject(PRODRUCT);
+        return (Product) this.getParseObject(PRODRUCT);
     }
 
     public void setProduct(Product product) {
         this.put(PRODRUCT, product);
     }
 
-    public boolean getPaid() {
-        return this.getBoolean(PAID);
+    public SALE_STATE getPaid() {
+        return (SALE_STATE) this.get(STATE);
     }
 
-    public void setPaid(boolean paid) {
-        this.put(PAID, paid);
+    public void setState(SALE_STATE state) {
+        this.put(STATE, state.getValue());
     }
 
     public GregorianCalendar getDataCreate() {
@@ -57,8 +57,8 @@ public class Sale extends ParseObject implements Serializable {
 
     public String getHour() {
         return String.valueOf(getDataCreate()
-                .get(GregorianCalendar.HOUR_OF_DAY))+":"+
+                .get(GregorianCalendar.HOUR_OF_DAY)) + ":" +
                 String.valueOf(getDataCreate()
-                .get(GregorianCalendar.SECOND));
+                        .get(GregorianCalendar.SECOND));
     }
 }
