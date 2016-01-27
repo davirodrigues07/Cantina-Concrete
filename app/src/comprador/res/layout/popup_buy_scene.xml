@@ -3,8 +3,7 @@
     android:id="@+id/scene"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    android:theme="@style/Theme.TransparencyDemo">
+    android:fitsSystemWindows="false">
 
     <FrameLayout
         android:id="@+id/buttom_buy"

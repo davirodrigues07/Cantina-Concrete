@@ -7,4 +7,10 @@
         <item name="android:colorAccent"></item>
         <item name="android:textColorPrimary"></item-->
     </style>
+
+    <style name="AppTheme.Animate">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+    </style>
 </resources>

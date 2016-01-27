@@ -1,9 +1,6 @@
-package br.com.concretesolutions.cantina.ui.fragment;
+package br.com.concretesolutions.cantina.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +10,6 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -35,6 +31,7 @@ import br.com.concretesolutions.cantina.data.type.parse.SALE_STATE;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.interfaces.RecyclerViewFill;
 import br.com.concretesolutions.cantina.presenter.ListProductPresenter;
+import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
 import br.com.concretesolutions.cantina.ui.view.ItemProductView;
@@ -42,10 +39,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ListProductFragment extends Fragment implements ItemProductView.OnClickItemButtonListener,
-        RecyclerViewAdapterBase.OnItemViewClickListener, RecyclerViewFill<Product>{
+public class ListProductActivity extends BaseActivity implements ItemProductView.OnClickItemButtonListener,
+        RecyclerViewAdapterBase.OnItemViewClickListener, RecyclerViewFill<Product> {
 
-    public static final String NAME = ListProductFragment.class.getSimpleName();
+    public static final String NAME = ListProductActivity.class.getSimpleName();
 
     @Bind(R.id.product_list)
     RecyclerView productList;
@@ -60,52 +57,38 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
 
     ListProductPresenter presenter;
 
-    public void popFragment() {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .remove(this)
-                .commit();
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_list_product, container);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        root = LayoutInflater.from(this).inflate(R.layout.activity_list_product, null);
+        setContentView(root);
         ButterKnife.bind(this, root);
+        mPreferences = ApplicationPreference.getPreferece(getApplicationContext());
         presenter = new ListProductPresenter();
         presenter.initialize(this);
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mPreferences = ApplicationPreference.getPreferece(this.getActivity().getApplicationContext());
-    }
 
     @Override
     public void prepareRecyclerViewWithData(final List<Product> list) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ListProductAdapter adapter = new ListProductAdapter(getActivity());
-                adapter.setList(list);
-                adapter.setOnClickItemButtonListener(ListProductFragment.this);
-                adapter.setItemViewClickListener(ListProductFragment.this);
-                productList.setAdapter(adapter);
-                productList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                productList.setItemAnimator(new DefaultItemAnimator());
-                adapter.notifyDataSetChanged();
-            }
-        });
+        ListProductAdapter adapter = new ListProductAdapter(this);
+        adapter.setList(list);
+        adapter.setOnClickItemButtonListener(ListProductActivity.this);
+        adapter.setItemViewClickListener(ListProductActivity.this);
+        productList.setAdapter(adapter);
+        productList.setLayoutManager(new LinearLayoutManager(this));
+        productList.setItemAnimator(new DefaultItemAnimator());
+        adapter.notifyDataSetChanged();
+
     }
 
 
     @OnClick(R.id.buttom_buy)
-    public  void buy(){
+    public void buy() {
         final Transition transition = new Fade(Fade.IN);
         final TransitionManager mTransitionManager = new TransitionManager();
-        final Scene mScene1 = Scene.getSceneForLayout(containerRoot, R.layout.button_buy_scene, getContext());
-        final Scene mScene2 = Scene.getSceneForLayout(containerRoot, R.layout.popup_buy_scene, getContext());
+        final Scene mScene1 = Scene.getSceneForLayout(containerRoot, R.layout.button_buy_scene, this);
+        final Scene mScene2 = Scene.getSceneForLayout(containerRoot, R.layout.popup_buy_scene, this);
         mTransitionManager.setTransition(mScene1, mScene2, transition);
         mTransitionManager.setTransition(mScene2, mScene1, transition);
 
@@ -114,7 +97,8 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO goto to activity
+                // TODO finalize sale process
+                finish();
             }
         });
         Button no = ButterKnife.findById(containerRoot, R.id.buy_no);
@@ -122,7 +106,7 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
             @Override
             public void onClick(View v) {
                 mTransitionManager.go(mScene1);
-                ButterKnife.bind(ListProductFragment.this, root);
+                ButterKnife.bind(ListProductActivity.this, root);
             }
         });
 
@@ -154,7 +138,7 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
                         sale.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
-                                Toast.makeText(getActivity(),
+                                Toast.makeText(ListProductActivity.this,
                                         "Compra realizada com sucesso",
                                         Toast.LENGTH_LONG)
                                         .show();
@@ -162,11 +146,6 @@ public class ListProductFragment extends Fragment implements ItemProductView.OnC
                         });
                     }
                 });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override

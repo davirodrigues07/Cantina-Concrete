@@ -1,9 +1,11 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +23,6 @@ import br.com.concretesolutions.cantina.presenter.DebitListPresenter;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.DebitListAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
-import br.com.concretesolutions.cantina.ui.fragment.ListProductFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,14 +36,14 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
 
     @Bind(R.id.total_debit)
     TextView debit;
-    /*@Bind(R.id.appbar)
+    @Bind(R.id.appbar)
     AppBarLayout appbar;
-    @Bind(R.id.toolbar)
+    /*@Bind(R.id.toolbar)
     Toolbar toolbar;*/
     @Bind(R.id.debit_list)
     RecyclerView debitList;
 
-    ListProductFragment fragment;
+    ListProductActivity fragment;
     DebitListPresenter presenter;
 
     @Override
@@ -107,17 +108,18 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        fragment.popFragment();
     }
 
     @OnClick(R.id.fab_buy)
     public void fabBuyClick() {
-        fragment = new ListProductFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fragment_animation_open, R.anim.fragment_animation_close);
-        transaction.add(android.R.id.content, fragment, ListProductFragment.NAME);
-        transaction.addToBackStack(ListProductFragment.NAME);
-        transaction.commit();
+        Intent openListProduct = new Intent(this, ListProductActivity.class);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, fabBuy, "fab_to_button");
+            startActivity(openListProduct, options.toBundle());
+        } else {
+            startActivity(openListProduct);
+        }
     }
 
 }

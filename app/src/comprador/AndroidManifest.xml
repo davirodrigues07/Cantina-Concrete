@@ -26,6 +26,11 @@
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.activity.ListProductActivity"
+            android:theme="@style/AppTheme.Animate"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
