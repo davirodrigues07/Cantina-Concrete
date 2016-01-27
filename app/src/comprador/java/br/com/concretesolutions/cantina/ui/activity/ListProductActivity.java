@@ -58,6 +58,12 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
     ListProductPresenter presenter;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.initialize(this);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         root = LayoutInflater.from(this).inflate(R.layout.activity_list_product, null);
@@ -65,7 +71,6 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
         ButterKnife.bind(this, root);
         mPreferences = ApplicationPreference.getPreferece(getApplicationContext());
         presenter = new ListProductPresenter();
-        presenter.initialize(this);
     }
 
 
