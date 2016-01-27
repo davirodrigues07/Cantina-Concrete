@@ -5,29 +5,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import java.util.LinkedList;
+import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
-import br.com.concretesolutions.cantina.ui.utils.RoundedTransformation;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ItemProductView extends FrameLayout {
 
     private static Context mContext;
-    @Bind(R.id.image_product_list_item)
-    ImageView imageProduct;
     @Bind(R.id.name_product_list_item)
     TextView nameProduct;
-    @Bind(R.id.amount_product_list_item)
-    TextView amountProduct;
+    @Bind(R.id.price_product_list_item)
+    TextView priceProduct;
     @Bind(R.id.buy)
-
     Button buy;
+    @Bind(R.id.minus)
+    TextView minus;
+    @Bind(R.id.plus)
+    TextView plus;
+    @Bind(R.id.total)
+    TextView textTotal;
+    private int total;
+
+    static List<Product> listProduct = new LinkedList<>();
     private OnClickItemButtonListener mButtonListener;
 
     public ItemProductView(Context context) {
@@ -44,21 +49,40 @@ public class ItemProductView extends FrameLayout {
      */
     public void bind(final Product product) {
         nameProduct.setText(product.getName());
-        amountProduct.setText(product.getAmount());
-        Picasso.with(mContext).load(product.getImage().getUrl())
-                .centerCrop()
-                .transform(new RoundedTransformation(100, 20))
-                .resize(160, 160)
-                .into(imageProduct);
+        priceProduct.setText(product.getPrice());
 
-        if (mButtonListener != null) {
+        minus.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (total > 0) {
+                    total--;
+                    listProduct.remove(product);
+                }
+                textTotal.setText(String.valueOf(total));
+            }
+        });
+
+        plus.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                total++;
+                listProduct.add(product);
+
+                textTotal.setText(String.valueOf(total));
+            }
+        });
+
+       /* if (mButtonListener != null) {
             buy.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mButtonListener.onClickedItemButton(product);
+                    mButtonListener.onClickedItemButton(listProduct);
+                    listProduct.clear();
                 }
             });
-        }
+
+
+        }*/
     }
 
     /**
@@ -72,16 +96,12 @@ public class ItemProductView extends FrameLayout {
         return this;
     }
 
-    public ImageView getImageProductTextView() {
-        return imageProduct;
-    }
-
     public TextView getNameProductTextView() {
         return nameProduct;
     }
 
-    public TextView getAmountProductTextView() {
-        return amountProduct;
+    public TextView getPriceProductTextView() {
+        return priceProduct;
     }
 
     public Button getGetBuyButton() {
@@ -92,6 +112,6 @@ public class ItemProductView extends FrameLayout {
      * Listener for click button of each item
      */
     public interface OnClickItemButtonListener {
-        void onClickedItemButton(Product product);
+        void onClickedItemButton(List<Product> product);
     }
 }

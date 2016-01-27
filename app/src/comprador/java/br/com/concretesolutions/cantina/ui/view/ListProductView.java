@@ -62,7 +62,7 @@ public class ListProductView extends LinearLayout implements RecyclerViewFill<Pr
     }
 
     @Override
-    public void onClickedItemButton(Product product) {
+    public void onClickedItemButton(List<Product> product) {
 
     }
 

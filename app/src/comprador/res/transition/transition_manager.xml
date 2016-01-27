@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionManager xmlns:android="http://schemas.android.com/apk/res/android">
+    <transition
+        android:fromScene="@layout/button_buy_scene"
+        android:toScene="@layout/popup_buy_scene"
+        android:transition="@transition/slow_auto_transition" />
+
+    <transition
+        android:fromScene="@layout/popup_buy_scene"
+        android:toScene="@layout/button_buy_scene"
+        android:transition="@transition/slow_auto_transition" />
+
+</transitionManager>

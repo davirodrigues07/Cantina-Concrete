@@ -62,4 +62,10 @@ public class Product extends ParseObject implements Serializable {
         return getName();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return this.getName().equals(((Product)o).getName())
+                && this.getPrice().equals(((Product)o).getPrice())
+                && this.getObjectId().equals(((Product)o).getObjectId());
+    }
 }

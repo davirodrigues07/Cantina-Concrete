@@ -9,4 +9,5 @@
     <color name="color_primary">#7a68ae</color>
     <color name="color_primary_dark">#605389</color>
     <color name="gray">#ffbbbbbb</color>
+    <color name="box_gray">#ddd</color>
 </resources>
