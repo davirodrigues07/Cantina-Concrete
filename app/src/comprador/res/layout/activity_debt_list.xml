@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left"
                     android:textAllCaps="true"
+                    android:text="R$ 0,00"
                     android:textColor="@color/white"
                     android:textSize="60sp"
                     android:textStyle="bold" />

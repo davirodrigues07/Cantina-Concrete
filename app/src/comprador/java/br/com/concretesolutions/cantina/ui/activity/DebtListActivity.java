@@ -43,13 +43,13 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     @Bind(R.id.debit_list)
     RecyclerView debitList;
 
-    ListProductActivity fragment;
     DebitListPresenter presenter;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.initialize(this, mPreferences);
     }
 
     @Override
@@ -63,7 +63,6 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
             startActivity(loginActivityIntent);
         }
         presenter = new DebitListPresenter();
-        presenter.initialize(this, mPreferences);
     }
 
     @Override

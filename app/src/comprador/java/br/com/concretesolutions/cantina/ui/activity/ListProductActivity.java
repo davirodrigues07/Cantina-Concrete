@@ -98,7 +98,7 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
             @Override
             public void onClick(View v) {
                 // TODO finalize sale process
-                finish();
+                onBackPressed();
             }
         });
         Button no = ButterKnife.findById(containerRoot, R.id.buy_no);
