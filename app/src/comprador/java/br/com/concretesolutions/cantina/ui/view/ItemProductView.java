@@ -1,17 +1,18 @@
 package br.com.concretesolutions.cantina.ui.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
+import br.com.concretesolutions.cantina.presenter.ShoppingCartRepository;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -32,7 +33,6 @@ public class ItemProductView extends FrameLayout {
     TextView textTotal;
     private int total;
 
-    static List<Product> listProduct = new LinkedList<>();
     private OnClickItemButtonListener mButtonListener;
 
     public ItemProductView(Context context) {
@@ -56,9 +56,10 @@ public class ItemProductView extends FrameLayout {
             public void onClick(View v) {
                 if (total > 0) {
                     total--;
-                    listProduct.remove(product);
+                    ShoppingCartRepository.remove(product);
                 }
                 textTotal.setText(String.valueOf(total));
+                 Log.d("app", "size: "+ShoppingCartRepository.size());
             }
         });
 
@@ -66,9 +67,9 @@ public class ItemProductView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 total++;
-                listProduct.add(product);
-
+                ShoppingCartRepository.add(product);
                 textTotal.setText(String.valueOf(total));
+                Log.d("app", "size: " + ShoppingCartRepository.size());
             }
         });
 

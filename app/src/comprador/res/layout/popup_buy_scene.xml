@@ -32,7 +32,7 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom|left"
             android:layout_margin="20dp"
-            android:background="@color/color_primary"
+            android:background="@android:color/transparent"
             android:text="NO"
             android:textColor="@color/white"
             android:textSize="15sp" />
@@ -43,7 +43,7 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom|right"
             android:layout_margin="20dp"
-            android:background="@color/color_primary"
+            android:background="@android:color/transparent"
             android:text="YES"
             android:textColor="@color/white"
             android:textSize="15sp" />

@@ -8,6 +8,7 @@ import android.transition.Fade;
 import android.transition.Scene;
 import android.transition.Transition;
 import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import br.com.concretesolutions.cantina.data.type.parse.SALE_STATE;
 import br.com.concretesolutions.cantina.data.type.parse.Sale;
 import br.com.concretesolutions.cantina.interfaces.RecyclerViewFill;
 import br.com.concretesolutions.cantina.presenter.ListProductPresenter;
+import br.com.concretesolutions.cantina.presenter.ShoppingCartRepository;
 import br.com.concretesolutions.cantina.ui.activity.base.BaseActivity;
 import br.com.concretesolutions.cantina.ui.adapter.ListProductAdapter;
 import br.com.concretesolutions.cantina.ui.adapter.base.RecyclerViewAdapterBase;
@@ -60,7 +62,9 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
     @Override
     protected void onResume() {
         super.onResume();
+        ShoppingCartRepository.clear();
         presenter.initialize(this);
+
     }
 
     @Override
@@ -90,14 +94,17 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
 
     @OnClick(R.id.buttom_buy)
     public void buy() {
-        final Transition transition = new Fade(Fade.IN);
+        final TransitionSet transitionSet = new TransitionSet();
+        final Transition fadeIn = new Fade(Fade.IN);
+        final Transition fadeOut = new Fade(Fade.OUT);
+        transitionSet.addTransition(fadeIn).addTransition(fadeOut);
         final TransitionManager mTransitionManager = new TransitionManager();
         final Scene mScene1 = Scene.getSceneForLayout(containerRoot, R.layout.button_buy_scene, this);
         final Scene mScene2 = Scene.getSceneForLayout(containerRoot, R.layout.popup_buy_scene, this);
-        mTransitionManager.setTransition(mScene1, mScene2, transition);
-        mTransitionManager.setTransition(mScene2, mScene1, transition);
-
+        mTransitionManager.setTransition(mScene1, mScene2, transitionSet);
+        mTransitionManager.setTransition(mScene2, mScene1, transitionSet);
         mTransitionManager.go(mScene2);
+
         Button yes = ButterKnife.findById(containerRoot, R.id.buy_yes);
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,5 +164,4 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
     public void onItemViewClicked(View v) {
         // add action
     }
-
 }

@@ -70,14 +70,14 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                debitList.setVisibility(View.VISIBLE);
-                DebitListAdapter adapter = new DebitListAdapter(DebtListActivity.this);
-                adapter.setList(list);
-                adapter.setItemViewClickListener(DebtListActivity.this);
-                debitList.setLayoutManager(new LinearLayoutManager(DebtListActivity.this));
-                debitList.setAdapter(adapter);
-                debitList.setItemAnimator(new DefaultItemAnimator());
-                adapter.notifyDataSetChanged();
+            debitList.setVisibility(View.VISIBLE);
+            DebitListAdapter adapter = new DebitListAdapter(DebtListActivity.this);
+            adapter.setList(list);
+            adapter.setItemViewClickListener(DebtListActivity.this);
+            debitList.setLayoutManager(new LinearLayoutManager(DebtListActivity.this));
+            debitList.setAdapter(adapter);
+            debitList.setItemAnimator(new DefaultItemAnimator());
+            adapter.notifyDataSetChanged();
             }
         });
     }
