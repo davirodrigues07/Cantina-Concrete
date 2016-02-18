@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cell"
     android:layout_width="385dp"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal">
 
@@ -11,60 +11,76 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="65dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="1dp"
-            android:text="Fechado"
-            android:textColor="@color/red"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="65dp"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:paddingRight="1dp"
+                android:paddingLeft="1dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Jul 06" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="75dp">
+        android:layout_height="60dp">
 
         <FrameLayout
             android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="18dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center|top"
             android:background="@color/color_primary_dark" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/state_icon"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/no_paid"
-            android:tint="@color/red" />
+            android:layout_marginTop="15dp"
+            android:src="@drawable/invoiced" />
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|left"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_gravity="left|center">
 
         <TextView
-            android:id="@+id/value_invoice"
+            android:id="@+id/status"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:padding="2dp"
             android:textColor="@color/red"
-            android:textSize="16dp"
-            tools:text="R$ 6,21" />
+            android:textSize="14sp"
+            android:text="Fechado" />
+
+        <TextView
+            android:id="@+id/value_invoice"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:text="R$ 0,00"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

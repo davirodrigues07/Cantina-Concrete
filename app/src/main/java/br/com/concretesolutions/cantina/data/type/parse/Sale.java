@@ -40,13 +40,13 @@ public class Sale extends ParseObject implements Serializable {
     }
 
     public String getDataCreate() {
-        return new SimpleDateFormat("MMM dd")
+        return new SimpleDateFormat("dd MMM")
                 .format(this.getCreatedAt().getTime());
     }
 
     public String getTimeCreate(){
 
-        return new SimpleDateFormat("hh:mm'h'")
+        return new SimpleDateFormat("h'h'mm")
                 .format(this.getCreatedAt().getTime());
     }
 }
