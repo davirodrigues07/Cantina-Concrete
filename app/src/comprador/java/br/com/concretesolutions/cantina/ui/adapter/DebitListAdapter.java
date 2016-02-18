@@ -11,6 +11,7 @@ import br.com.concretesolutions.cantina.ui.view.base.ViewWrapper;
 public class DebitListAdapter extends RecyclerViewAdapterBase<Sale, ItemDebitView> {
 
     Context mContext;
+    String totalInvoiced;
 
     public DebitListAdapter(Context context) {
         mContext = context;
@@ -24,6 +25,15 @@ public class DebitListAdapter extends RecyclerViewAdapterBase<Sale, ItemDebitVie
     @Override
     public void onBindViewHolder(ViewWrapper<ItemDebitView> holder, int position) {
         ItemDebitView view = holder.getView();
-        view.bind(getList().get(position));
+        if (getList().get(position) == null) {
+            view.bind(totalInvoiced);
+        } else {
+            view.bind(getList().get(position));
+        }
     }
+
+    public void setTotalInvoiced(String totalInvoiced) {
+        this.totalInvoiced = totalInvoiced;
+    }
+
 }

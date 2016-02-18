@@ -78,19 +78,6 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
     }
 
 
-    @Override
-    public void prepareRecyclerViewWithData(final List<Product> list) {
-        ListProductAdapter adapter = new ListProductAdapter(this);
-        adapter.setList(list);
-        adapter.setOnClickItemButtonListener(ListProductActivity.this);
-        adapter.setItemViewClickListener(ListProductActivity.this);
-        productList.setAdapter(adapter);
-        productList.setLayoutManager(new LinearLayoutManager(this));
-        productList.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyDataSetChanged();
-
-    }
-
 
     @OnClick(R.id.buttom_buy)
     public void buy() {
@@ -122,6 +109,18 @@ public class ListProductActivity extends BaseActivity implements ItemProductView
             }
         });
 
+    }
+
+    @Override
+    public void prepareRecyclerViewWithData(List<Product> list, String totalInvoiced) {
+        ListProductAdapter adapter = new ListProductAdapter(this);
+        adapter.setList(list);
+        adapter.setOnClickItemButtonListener(ListProductActivity.this);
+        adapter.setItemViewClickListener(ListProductActivity.this);
+        productList.setAdapter(adapter);
+        productList.setLayoutManager(new LinearLayoutManager(this));
+        productList.setItemAnimator(new DefaultItemAnimator());
+        adapter.notifyDataSetChanged();
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
 
 @ParseClassName("Sale")
 public class Sale extends ParseObject implements Serializable {
@@ -39,26 +39,14 @@ public class Sale extends ParseObject implements Serializable {
         this.put(STATE, state.getValue());
     }
 
-    public GregorianCalendar getDataCreate() {
-        GregorianCalendar dataCreate = new GregorianCalendar();
-        dataCreate.setGregorianChange(this.getDate(DATE_OF_CREATE));
-        return dataCreate;
+    public String getDataCreate() {
+        return new SimpleDateFormat("MMM dd")
+                .format(this.getCreatedAt().getTime());
     }
 
-    public String getDay() {
-        return String.valueOf(getDataCreate()
-                .get(GregorianCalendar.DAY_OF_MONTH));
-    }
+    public String getTimeCreate(){
 
-    public String getMonth() {
-        return String.valueOf(getDataCreate()
-                .get(GregorianCalendar.MONTH));
-    }
-
-    public String getHour() {
-        return String.valueOf(getDataCreate()
-                .get(GregorianCalendar.HOUR_OF_DAY)) + ":" +
-                String.valueOf(getDataCreate()
-                        .get(GregorianCalendar.SECOND));
+        return new SimpleDateFormat("hh:mm'h'")
+                .format(this.getCreatedAt().getTime());
     }
 }

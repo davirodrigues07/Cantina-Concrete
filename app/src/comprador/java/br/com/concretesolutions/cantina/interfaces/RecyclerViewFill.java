@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RecyclerViewFill<T> {
 
-    void prepareRecyclerViewWithData(final List<T> list);
+    void prepareRecyclerViewWithData(final List<T> list, String totalInvoiced);
 
     void loadingData();
 

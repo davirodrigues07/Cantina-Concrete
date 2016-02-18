@@ -40,7 +40,7 @@ public class ListProductView extends LinearLayout implements RecyclerViewFill<Pr
     }
 
     @Override
-    public void prepareRecyclerViewWithData(List<Product> list) {
+    public void prepareRecyclerViewWithData(List<Product> list, String totalInvoiced) {
         ListProductAdapter adapter = new ListProductAdapter(getContext());
         adapter.setList(list);
         adapter.setOnClickItemButtonListener(this);

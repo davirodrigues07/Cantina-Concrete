@@ -11,36 +11,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:textColor="@color/color_primary"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            tools:text="Jul" />
-
-        <TextView
-            android:id="@+id/day"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:padding="2dp"
-            android:textColor="@color/color_primary"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            tools:text="06" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:layout_gravity="right"
+                android:textSize="8sp"
+                tools:text="15:00h" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="65dp"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:paddingRight="1dp"
+                android:paddingLeft="1dp"
+                android:textColor="@color/color_primary"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                tools:text="Jul 06" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="85dp">
+        android:layout_height="70dp">
 
         <FrameLayout
             android:layout_width="1px"
@@ -53,7 +62,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/no_paid" />
 
     </FrameLayout>
@@ -61,41 +70,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:layout_gravity="left|center">
 
         <TextView
-            android:id="@+id/hour"
-            android:layout_width="wrap_content"
+            android:id="@+id/detail"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:padding="2dp"
-            android:textSize="11dp"
-            tools:text="15:00h" />
+            android:textSize="16dp"
+            tools:text="Biscoito Negresco" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="left">
-
-            <TextView
-                android:id="@+id/detail"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:textSize="18dp"
-                tools:text="Biscoito Negresco" />
-
-            <TextView
-                android:id="@+id/value"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
-                android:text="R$ 2,50"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:gravity="center_vertical|left"
+            android:text="R$ 2,50"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

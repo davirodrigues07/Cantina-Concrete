@@ -17,7 +17,7 @@ public class ListProductPresenter {
             @Override
             public void done(List<Product> list, ParseException e) {
                 recyclerViewFill.finishLoadDAta();
-                recyclerViewFill.prepareRecyclerViewWithData(list);
+                recyclerViewFill.prepareRecyclerViewWithData(list, null);
             }
         });
     }

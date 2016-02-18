@@ -18,10 +18,8 @@ public class ItemDebitView extends LinearLayout {
 
     @Bind(R.id.cell)
     LinearLayout cell;
-    @Bind(R.id.month)
-    TextView month;
-    @Bind(R.id.day)
-    TextView day;
+    @Bind(R.id.date)
+    TextView date;
     @Bind(R.id.state_icon)
     ImageView stateIcon;
     @Bind(R.id.hour)
@@ -35,29 +33,30 @@ public class ItemDebitView extends LinearLayout {
     public ItemDebitView(Context context) {
         super(context);
         mContext = context;
-        View view = LayoutInflater.from(context).inflate(R.layout.item_debit_layout, this);
-        ButterKnife.bind(view);
 
     }
 
     public void bind(Sale sale) {
-        month.setText("fev");
-        day.setText("07");
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_debit_layout, this);
+        ButterKnife.bind(view);
+        date.setText(sale.getDataCreate());
         Picasso.with(mContext)
                 .load(R.drawable.paid)
                 .placeholder(R.drawable.no_paid)
                 .into(stateIcon);
-        hour.setText("4:20h");
+        hour.setText(sale.getTimeCreate());
         detail.setText(sale.getProduct().getName());
-        value.setText(sale.getProduct().getPrice());
+        value.setText("R$ " + sale.getProduct().getPrice());
+
     }
 
-    public TextView getMonth() {
-        return month;
+    public void bind(String valueTotalInvoice) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_total_invoiced, this);
+        ((TextView) view.findViewById(R.id.value_invoice)).setText(valueTotalInvoice);
     }
 
-    public TextView getDay() {
-        return day;
+    public TextView getDate() {
+        return date;
     }
 
     public ImageView getStateIcon() {

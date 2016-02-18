@@ -66,18 +66,20 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     }
 
     @Override
-    public void prepareRecyclerViewWithData(final List<Sale> list) {
+    public void prepareRecyclerViewWithData(final List<Sale> list, final String totalInvoiced) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            debitList.setVisibility(View.VISIBLE);
-            DebitListAdapter adapter = new DebitListAdapter(DebtListActivity.this);
-            adapter.setList(list);
-            adapter.setItemViewClickListener(DebtListActivity.this);
-            debitList.setLayoutManager(new LinearLayoutManager(DebtListActivity.this));
-            debitList.setAdapter(adapter);
-            debitList.setItemAnimator(new DefaultItemAnimator());
-            adapter.notifyDataSetChanged();
+                debitList.setVisibility(View.VISIBLE);
+                DebitListAdapter adapter = new DebitListAdapter(DebtListActivity.this);
+                adapter.setTotalInvoiced(totalInvoiced);
+                list.add(list.size(), null);
+                adapter.setList(list);
+                adapter.setItemViewClickListener(DebtListActivity.this);
+                debitList.setLayoutManager(new LinearLayoutManager(DebtListActivity.this));
+                debitList.setAdapter(adapter);
+                debitList.setItemAnimator(new DefaultItemAnimator());
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -95,8 +97,13 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     }
 
     @Override
-    public void returnTotalDebit(String value) {
+    public void returnTotalInvoice(String value) {
         debit.setText(value);
+    }
+
+    @Override
+    public void returnError(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override

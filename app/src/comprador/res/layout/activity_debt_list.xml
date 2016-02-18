@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/debit_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_debit_layout"/>
 
         <ProgressBar
             android:id="@+id/load_debit_data"
@@ -95,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appbar"
-        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginLeft="@dimen/fab_margin_left"
         android:layout_marginTop="-30dp"
         android:elevation="20dp"
         android:src="@mipmap/ic_add_white"

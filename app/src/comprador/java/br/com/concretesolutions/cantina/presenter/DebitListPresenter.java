@@ -28,16 +28,28 @@ public class DebitListPresenter {
 
     public void prepareCallback() {
         debitListView.loadingData();
-        HashMap<String, String> map = new HashMap<>();
+
+        final HashMap<String, String> map = new HashMap<>();
         map.put("googlePlusId", preferences.GooglePlusId());
-        ParseCloud.callFunctionInBackground("debitList", map, new FunctionCallback<HashMap>() {
+        ParseCloud.callFunctionInBackground("totalInvoice", map, new FunctionCallback<String>() {
             @Override
-            public void done(HashMap object, ParseException e) {
-                List<Sale> sales = (List<Sale>) object.get("sales");
-                debitListView.returnTotalDebit("R$ " + PriceHelper.formatPrice(object.get("total").toString()));
-                debitListView.prepareRecyclerViewWithData(sales);
-                debitListView.finishLoadDAta();
+            public void done(final String value, ParseException e) {
+                debitListView.returnTotalInvoice("R$ " + PriceHelper.formatPrice(value));
+                ParseCloud.callFunctionInBackground("debitList", map, new FunctionCallback<HashMap>() {
+                    @Override
+                    public void done(HashMap object, ParseException e) {
+                        if (e == null) {
+                            List<Sale> sales = (List<Sale>) object.get("sales");
+                            debitListView.prepareRecyclerViewWithData(sales, "R$ " + PriceHelper.formatPrice(value));
+                            debitListView.finishLoadDAta();
+                        } else {
+
+                        }
+                    }
+                });
             }
         });
+
+
     }
 }
