@@ -49,7 +49,6 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.initialize(this, mPreferences);
     }
 
     @Override
@@ -61,8 +60,10 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
                 mPreferences.GooglePlusId().equals("")) {
             Intent loginActivityIntent = new Intent(this, LoginActivity.class);
             startActivity(loginActivityIntent);
+        } else {
+            presenter.initialize(this, mPreferences);
+            presenter = new DebitListPresenter();
         }
-        presenter = new DebitListPresenter();
     }
 
     @Override

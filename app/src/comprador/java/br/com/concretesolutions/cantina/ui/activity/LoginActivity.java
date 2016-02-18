@@ -1,10 +1,15 @@
 package br.com.concretesolutions.cantina.ui.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -75,6 +80,11 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100) {
+            if (resultCode == Activity.RESULT_OK) {
+                click();
+            }
+        }
         if (!mGoogleApiClient.isConnecting() && mConectionResult.hasResolution()) {
             mGoogleApiClient.connect();
         }
@@ -129,15 +139,22 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.Conne
     }
 
     @OnClick(R.id.sign_in_button)
-    public void click(View v) {
-        if (!mGoogleApiClient.isConnecting() && mConectionResult.hasResolution()) {
-            iconApp.setVisibility(View.GONE);
-            progressLogin.setVisibility(View.VISIBLE);
-            try {
-                mConectionResult.startResolutionForResult(this, mConectionResult.getErrorCode());
-            } catch (IntentSender.SendIntentException e) {
-                mGoogleApiClient.connect();
+    public void click() {
+        int verifyPermission = ContextCompat.checkSelfPermission(
+                this.getApplicationContext(), Manifest.permission.GET_ACCOUNTS);
+
+        if (verifyPermission == PackageManager.PERMISSION_GRANTED) {
+            if (!mGoogleApiClient.isConnecting() && mConectionResult.hasResolution()) {
+                iconApp.setVisibility(View.GONE);
+                progressLogin.setVisibility(View.VISIBLE);
+                try {
+                    mConectionResult.startResolutionForResult(this, mConectionResult.getErrorCode());
+                } catch (IntentSender.SendIntentException e) {
+                    mGoogleApiClient.connect();
+                }
             }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, 100);
         }
     }
 
