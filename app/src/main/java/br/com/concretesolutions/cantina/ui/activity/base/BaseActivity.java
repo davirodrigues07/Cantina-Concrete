@@ -16,9 +16,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreferences = ApplicationPreference
-                .getPreferece(this.getApplicationContext());
         setContentView(R.layout.base_activity);
+
+        mPreferences = ApplicationPreference
+                .getPreference(this.getApplicationContext());
     }
 
     @Override

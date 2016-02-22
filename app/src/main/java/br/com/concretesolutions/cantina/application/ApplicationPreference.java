@@ -17,7 +17,7 @@ public class ApplicationPreference implements Preferences {
         prefs = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
     }
 
-    public static ApplicationPreference getPreferece(Context context) {
+    public static ApplicationPreference getPreference(Context context) {
         if (PREFERENCE != null) {
             return PREFERENCE;
         }

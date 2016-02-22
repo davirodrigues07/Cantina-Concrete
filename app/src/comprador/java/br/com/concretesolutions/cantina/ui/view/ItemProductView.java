@@ -1,18 +1,14 @@
 package br.com.concretesolutions.cantina.ui.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.List;
-
 import br.com.concretesolutions.cantina.R;
 import br.com.concretesolutions.cantina.data.type.parse.Product;
-import br.com.concretesolutions.cantina.presenter.ShoppingCartRepository;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -25,13 +21,6 @@ public class ItemProductView extends FrameLayout {
     TextView priceProduct;
     @Bind(R.id.buy)
     Button buy;
-    @Bind(R.id.minus)
-    TextView minus;
-    @Bind(R.id.plus)
-    TextView plus;
-    @Bind(R.id.total)
-    TextView textTotal;
-    private int total;
 
     private OnClickItemButtonListener mButtonListener;
 
@@ -51,39 +40,16 @@ public class ItemProductView extends FrameLayout {
         nameProduct.setText(product.getName());
         priceProduct.setText(product.getPrice());
 
-        minus.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (total > 0) {
-                    total--;
-                    ShoppingCartRepository.remove(product);
-                }
-                textTotal.setText(String.valueOf(total));
-                 Log.d("app", "size: "+ShoppingCartRepository.size());
-            }
-        });
-
-        plus.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                total++;
-                ShoppingCartRepository.add(product);
-                textTotal.setText(String.valueOf(total));
-                Log.d("app", "size: " + ShoppingCartRepository.size());
-            }
-        });
-
-       /* if (mButtonListener != null) {
+        if (mButtonListener != null) {
             buy.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mButtonListener.onClickedItemButton(listProduct);
-                    listProduct.clear();
+                    mButtonListener.onClickedItemButton(product);
                 }
             });
 
 
-        }*/
+        }
     }
 
     /**
@@ -113,6 +79,6 @@ public class ItemProductView extends FrameLayout {
      * Listener for click button of each item
      */
     public interface OnClickItemButtonListener {
-        void onClickedItemButton(List<Product> product);
+        void onClickedItemButton(Product product);
     }
 }

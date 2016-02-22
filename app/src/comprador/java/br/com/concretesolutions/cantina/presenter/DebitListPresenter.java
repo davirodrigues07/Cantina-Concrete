@@ -4,6 +4,7 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class DebitListPresenter {
     private DebitListView debitListView;
     private Preferences preferences;
 
+    public DebitListPresenter() {
+    }
 
     public void initialize(final DebitListView debitListView, Preferences preferences) {
 
@@ -40,6 +43,7 @@ public class DebitListPresenter {
                     public void done(HashMap object, ParseException e) {
                         if (e == null) {
                             List<Sale> sales = (List<Sale>) object.get("sales");
+                            Collections.reverse(sales);
                             debitListView.prepareRecyclerViewWithData(sales, "R$ " + PriceHelper.formatPrice(value));
                             debitListView.finishLoadDAta();
                         } else {

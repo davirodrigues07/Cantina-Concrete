@@ -45,10 +45,16 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
 
     DebitListPresenter presenter;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter = new DebitListPresenter();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.initialize(this, mPreferences);
     }
 
     @Override
@@ -61,8 +67,7 @@ public class DebtListActivity extends BaseActivity implements DebitListView, Rec
             Intent loginActivityIntent = new Intent(this, LoginActivity.class);
             startActivity(loginActivityIntent);
         } else {
-            presenter.initialize(this, mPreferences);
-            presenter = new DebitListPresenter();
+
         }
     }
 
